@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CarteComponent } from './carte/carte.component';
-
+import { GoogleMapsModule } from '@angular/google-maps'
+  
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
 @NgModule({
@@ -16,6 +17,7 @@ import { CarteComponent } from './carte/carte.component';
   ],
   imports: [
     BrowserModule,
+    GoogleMapsModule,
     AppRoutingModule,
   ],
   providers: [],
