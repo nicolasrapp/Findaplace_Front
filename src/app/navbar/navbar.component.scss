@@ -1,0 +1,46 @@
+/* navbar.component.scss */
+.navbar {
+    background-color: #FFC480;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px; /* Adjust padding for spacing */
+  
+    .navbar-content {
+      display: flex; /* Create a flex container for the title and links */
+      align-items: center; /* Vertically center the content */
+  
+      h1 {
+        
+        font-size: 20px;
+        margin: 0; /* Remove any margin on the title */
+      }
+  
+      .navbar-links {
+        display: flex; /* Create a flex container for the links */
+        align-items: center; /* Vertically center the links */
+      }
+    }
+  
+    a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      &:hover {
+        color: black;
+      }
+    }
+  
+    .navbar-right {
+      display: flex;
+      align-items: center;
+  
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+      }
+    }
+  }
+  
