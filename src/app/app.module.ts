@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CarteComponent } from './carte/carte.component';
 
+//AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
 @NgModule({
   declarations: [
