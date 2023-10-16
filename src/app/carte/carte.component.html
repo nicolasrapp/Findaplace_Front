@@ -1,8 +1,17 @@
-<google-map height="500px"
-            width="900px"
-            [center]="center"
-            [zoom]="zoom"
-            (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)"
-            [options]="mapOptions">
-</google-map>
+<div     id="map"
+>
+<google-map
+  #googleMapElement
+  height="500px"
+  width="900px"
+  [center]="center"
+  [zoom]="zoom"
+  (mapClick)="moveMap($event)"
+  (mapMousemove)="move($event)"
+  [options]="mapOptions"
+></google-map>
+
+<button (click)="addMarker()">Add Marker</button>
+
+</div>
+
