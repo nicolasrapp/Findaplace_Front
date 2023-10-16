@@ -1,20 +1,20 @@
 /* navbar.component.scss */
-.navbar {
+.nav-tabs {
     background-color: #FFC480;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px; /* Adjust padding for spacing */
-  
+    padding: 25px 25px; /* Adjust padding for spacing */    
     .navbar-content {
       display: flex; /* Create a flex container for the title and links */
       align-items: center; /* Vertically center the content */
   
       h1 {
-        
+        color: white;
+        font-weight: 600;
         font-size: 20px;
-        margin: 0; /* Remove any margin on the title */
+        margin: 0;
+        margin-right: 15px; /* Remove any margin on the title */
       }
   
       .navbar-links {
@@ -27,9 +27,9 @@
       color: white;
       text-decoration: none;
       margin: 0 15px;
-      &:hover {
-        color: black;
-      }
+      // &:hover {
+      //   color: black;
+      // }
     }
   
     .navbar-right {

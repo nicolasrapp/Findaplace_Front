@@ -1,4 +1,9 @@
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import '@fontsource/inter';
 /* You can add global styles to this file, and also import other style files */
 body {
+    font-family: 'Inter';
     background-color: #FFEAB2;
   }
+
