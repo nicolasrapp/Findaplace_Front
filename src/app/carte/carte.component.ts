@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { mapstyle } from 'src/mapstyle';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-carte',
@@ -55,7 +54,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
     anchor: new google.maps.Point(0, 32),
   };
 
-  constructor(private dialog: MatDialog) {}
+  constructor() {}
 
   addMarker() {
     // Create a marker using the input data (address and restaurant name)
