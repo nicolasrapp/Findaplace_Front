@@ -7,10 +7,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CarteComponent } from './carte/carte.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+
 
 
   import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacePopupComponent } from './place-popup/place-popup.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -19,7 +24,10 @@ import { PlacePopupComponent } from './place-popup/place-popup.component';
     AppComponent,
     NavbarComponent,
     CarteComponent,
-    PlacePopupComponent
+    PlacePopupComponent,
+    LoginComponent,
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +35,7 @@ import { PlacePopupComponent } from './place-popup/place-popup.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

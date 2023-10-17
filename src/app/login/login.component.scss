@@ -1,0 +1,52 @@
+.login-container {
+    background-color: #FFC480;
+    border: 1px solid #FFC480;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    margin-top: 150px;
+  
+    h2 {
+      color: white;
+    }
+  
+    .form-group {
+      margin: 10px 0;
+      text-align: left;
+  
+      label {
+        color: white;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #FFC480;
+        border-radius: 5px;
+      }
+    }
+  
+    button {
+        background-color: #FFC480;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s; // Add a smooth transition
+      
+        &:hover {
+          background-color: white;
+          color: #FFC480;
+        }
+      }
+      
+  
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  }
+  

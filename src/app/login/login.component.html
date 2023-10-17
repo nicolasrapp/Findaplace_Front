@@ -1,0 +1,18 @@
+<div class="login-container">
+    <h2>Connexion</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Pseudo</label>
+        <input type="username" id="username" name="username" [(ngModel)]="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+      <button type="submit">Se connecter</button>
+      <div *ngIf="loginError" class="error-message">Erreur. Veuillez réessayer.</div>
+
+    </form>
+    <button (click)="redirectToSignup()">Créer son compte</button>
+  </div>
+  
