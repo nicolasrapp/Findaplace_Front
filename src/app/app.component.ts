@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ReviewPopupComponent } from './review-popup/review-popup.component';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,7 @@ import { UserService } from './user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, public dialog: MatDialog) {}
 
   ngOnInit() {
     const userDataString = localStorage.getItem('connectedUser');
@@ -17,4 +20,16 @@ export class AppComponent implements OnInit {
     }
   }
   
+  
+  openDialog(): void { 
+    let dialogRef = this.dialog.open(ReviewPopupComponent, { 
+      width: '250px', 
+      data: "right click"
+    }); 
+  
+    // dialogRef.afterClosed().subscribe(result => { 
+    //   this.animal = result; 
+    // }); 
+  } 
+
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { ProfilComponent } from './profil/profil.component';
 import { AddfriendsComponent } from './addfriends/addfriends.component';
 import { FilterUsersPipe } from './filterusers.pipe';
 
+import { ReviewPopupComponent } from './review-popup/review-popup.component';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -44,7 +46,9 @@ import { FilterUsersPipe } from './filterusers.pipe';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    ReviewPopupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
