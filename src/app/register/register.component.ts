@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { users } from 'src/users';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -14,22 +15,28 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   onSubmit() {
     const newUser = {
+      id: '',
+      user_name: this.pseudo,
+      last_name: this.nom,
+      first_name: this.prenom,
+      password: this.password,
       email: this.email,
-      nom: this.nom,
-      prenom: this.prenom,
-      pseudo: this.pseudo,
-      mot_de_passe: this.password
     };
+
+    this.userService.registerUser(newUser).subscribe(
+      (response) => {
+        console.log('User registered successfully:', response);
+        localStorage.setItem('users', JSON.stringify(users));
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Error registering user:', error);
+      }
+    );
   
-    // Add the new user to the users data
-    users[0].utilisateurs.push(newUser);
-  
-    // Optional: Save the updated users data to local storage for persistence
-    localStorage.setItem('users', JSON.stringify(users));
-    this.router.navigate(['/login']);
   }
 }

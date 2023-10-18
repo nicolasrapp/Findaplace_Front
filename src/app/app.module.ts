@@ -16,6 +16,8 @@ import { PlacePopupComponent } from './place-popup/place-popup.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -35,7 +37,8 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
