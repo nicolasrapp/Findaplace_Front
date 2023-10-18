@@ -17,6 +17,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfilComponent } from './profil/profil.component';
+import { AddfriendsComponent } from './addfriends/addfriends.component';
+import { FilterUsersPipe } from './filterusers.pipe';
 
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
@@ -29,7 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
     PlacePopupComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfilComponent,
+    AddfriendsComponent,
+    FilterUsersPipe
   ],
   imports: [
     BrowserModule,

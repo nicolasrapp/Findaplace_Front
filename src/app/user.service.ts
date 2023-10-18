@@ -22,6 +22,10 @@ export class UserService {
     return this.http.post(`${APIURL}/user`, userData);
   }
 
+  getAllUsers() {
+    return this.http.get(`${APIURL}/user`);
+  }
+
   clearConnectedUser() {
     this.connectedUser = null;
   }

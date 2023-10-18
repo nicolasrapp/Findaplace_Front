@@ -1,0 +1,42 @@
+.main-container {
+    display: flex; /* Use flexbox to arrange the components side by side */
+    justify-content: space-between; /* Add space between the components */
+    align-items: flex-start; /* Align the components at the top */
+    margin-top: 150px;
+    
+
+    /* Adjust the width as needed */
+    /* width: 100%; */ /* By default, it takes up the entire available width */
+  }
+
+.addfriends-container{
+    margin: 0 auto;
+}
+
+.profile-container {
+    background-color: #FFC480;
+    border: 1px solid #FFC480;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  
+    h2 {
+      color: white;
+    }
+  
+    .form-group {
+      margin: 10px 0;
+      text-align: left;
+  
+      label {
+        color: white;
+      }
+  
+      p {
+        color: white; // Style the text color
+      }
+    }
+  }
+  
