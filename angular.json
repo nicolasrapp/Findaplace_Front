@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "ngx-google-places-autocomplete"
+            ],
             "outputPath": "dist/findaplace",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -53,6 +56,7 @@
             },
             "development": {
               "buildOptimizer": false,
+              "aot": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,

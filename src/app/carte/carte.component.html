@@ -9,9 +9,11 @@
   (mapClick)="moveMap($event)"
   (mapMousemove)="move($event)"
   [options]="mapOptions"
-></google-map>
+>
+<button (click)="moveToLocation()">Pan to current location</button>
+</google-map>
 
-<button (click)="addMarker()">Add Marker</button>
+<button mat-raised-button (click)="addMarker()">Add Marker</button>
 
 </div>
 

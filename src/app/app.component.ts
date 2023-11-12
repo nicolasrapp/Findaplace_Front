@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ReviewPopupComponent } from './review-popup/review-popup.component';
+import { PlaceSearchResult, ReviewPopupComponent } from './review-popup/review-popup.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  fromValue: PlaceSearchResult | undefined;
+
+  getPlace(placeChanged : PlaceSearchResult) {
+    this.fromValue = placeChanged;
+  }
+  
+  openReview() {
+  }
   constructor(private userService: UserService, public dialog: MatDialog) {}
 
   ngOnInit() {

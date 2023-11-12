@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
 <div class="carte">
-    <app-carte></app-carte>
-  </div>
+  <app-carte></app-carte>
+</div>
+<button mat-raised-button (click)="openDialog()"> 
+  Pick one 
+</button> 
+<app-review-popup (placeChanged)="getPlace($event)"></app-review-popup>
+<div *ngIf="fromValue">
+  <h2>{{ fromValue.name }}</h2>
+  <img [src]="fromValue.imageUrl">
+</div>
   <router-outlet></router-outlet>
 

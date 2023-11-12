@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
+import { MatButtonModule } from '@angular/material/button';
+import { Loader } from '@googlemaps/js-api-loader';
 import { mapstyle } from 'src/mapstyle';
 
 @Component({
   selector: 'app-carte',
   templateUrl: './carte.component.html',
-  styleUrls: ['./carte.component.scss']
+  styleUrls: ['./carte.component.scss']  
 })
 export class CarteComponent implements OnInit, AfterViewInit {
   @ViewChild('googleMapElement', { static: false }) googleMapElement!: GoogleMap;
@@ -32,8 +34,59 @@ export class CarteComponent implements OnInit, AfterViewInit {
     styles: mapstyle
   };
 
-  ngOnInit(): void {
-    // Your initialization logic, if any
+  constructor(private loader: Loader) {}
+
+  getBounds(): google.maps.LatLngBounds | undefined {
+    if (this.googleMap) {
+      return this.googleMap.getBounds() || undefined;
+    }
+    return undefined;
+  }
+
+  moveToLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          // this.infoWindow.setPosition(pos);
+          // this.infoWindow.setContent("Location found.");
+          // console.log("Location found");
+          // this.infoWindow.open(this.googleMap);
+          // this.googleMap?.setCenter(pos);
+          this.center = pos;
+        },
+        () => {
+          this.handleLocationError(true, this.infoWindow, this.center);
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      this.handleLocationError(false, this.infoWindow, this.center);
+    }
+  }
+
+  handleLocationError(
+    browserHasGeolocation: boolean,
+    infoWindow: google.maps.InfoWindow,
+    pos: google.maps.LatLngLiteral
+  ) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    console.log("Location: ", pos);
+    infoWindow.open(this.googleMap);
+  }
+
+  infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
+  ngOnInit() {
+
   }
 
   ngAfterViewInit(): void {
@@ -53,8 +106,6 @@ export class CarteComponent implements OnInit, AfterViewInit {
     // The anchor for this image is the base of the flagpole at (0, 32).
     anchor: new google.maps.Point(0, 32),
   };
-
-  constructor() {}
 
   addMarker() {
     // Create a marker using the input data (address and restaurant name)
