@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APIURL } from 'src/config';
+import { switchMap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private connectedUser: any; // You can define a User type/interface
+  userData: any; // Replace 'any' with your actual user type
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +28,40 @@ export class UserService {
   getAllUsers() {
     return this.http.get(`${APIURL}/user`);
   }
+  
+  getUser(id: any) {
+    return this.http.get(`${APIURL}/user/${id}`)
+    
+  }
+
+
+  addFriend(friendid: any) {
+    console.log(friendid);
+  
+    this.getUser(friendid).pipe(
+      switchMap((user) => {
+        this.userData = user;
+        var me = this.getConnectedUser();
+        console.log(this.userData);
+        return this.http.post(`${APIURL}/relation?follower=${me.id}&followed=${this.userData.id}`, null);
+      })
+    ).subscribe(
+      (response) => {
+        console.log('Friend added successfully:', response);
+        // Handle the successful response
+      },
+      (error) => {
+        console.error('Error adding friend:', error);
+        // Handle errors
+      }
+    );
+  }
+
+  getFollowers(id: any) {
+    return this.http.get(`${APIURL}/user/followers/${id}`);
+  }
+
+ 
 
   clearConnectedUser() {
     this.connectedUser = null;

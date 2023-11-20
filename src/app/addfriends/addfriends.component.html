@@ -1,14 +1,18 @@
 <!-- user-list.component.html -->
 <div class="user-list-container">
-    <h2>Add Friends</h2>
+    <h2>Add Followers</h2>
     <input type="text" [(ngModel)]="searchQuery" placeholder="Search by username" />
   <div class="friend-container">
     <ul *ngFor="let user of users | filterUsers: searchQuery" class="friend">
         <li >
           {{ user.user_name }}
         </li>
-        <button class ='button' type="submit">Add friend</button>
-      </ul>
+<ng-container *ngIf="isUserFollowing(user)">
+    <label class="following-label">Following</label>
+  </ng-container>
+  <ng-container *ngIf="!isUserFollowing(user)">
+    <button class='button' type="submit" (click)="FollowUser(user)">Follow</button>
+  </ng-container>      </ul>
   </div>
     
   </div>
