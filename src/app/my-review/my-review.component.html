@@ -1,0 +1,35 @@
+<div class="popup">
+    <div class="photo_text">
+    <div class="text">
+    <div class="place-name">
+        <h1>Titre review</h1>
+    </div>
+    <div class="address">
+        <p>38 rue de Buci, 75006</p>
+    </div>
+    
+    <div class="rating-line">
+        <div class="rating">
+            <div class="left">
+            <p>{{review.rate}}</p>
+            <div class="stars">
+                <app-rating-review [rating]="review.rate"></app-rating-review>                
+            </div> 
+        </div> 
+        </div>
+    </div>
+    <div class="comments">
+        <p><b>Commentaire :</b> </p>
+        <p>{{review.comment}}</p>
+    </div>
+    </div>
+    <div class="photos">
+        <div class="photo">
+            <img src="./assets/pizza1.jpeg">
+        </div>
+    </div>
+    </div>
+    <div class="tag_wrapper">
+        <app-tag *ngFor="let tag of review.tags" [tagName]="tag.name" [tagColor] = "tag.color"></app-tag>
+    </div>
+</div>

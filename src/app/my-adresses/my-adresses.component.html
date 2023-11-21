@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+<div id="id_container_adresses">
+    <h1>Liste des Restaurants</h1>
+    <div id="div_list_resto">
+        <app-my-review *ngFor="let review of reviews" [review]="review" ></app-my-review>
+    </div>
+</div>

@@ -10,7 +10,7 @@
         <a routerLink="/carte">Carte</a>
       </li>
       <li ngbNavItem>
-        <a routerLink="/revues">Mes adresses</a>
+        <a routerLink="/my_adresses">Mes adresses</a>
       </li>
       <li ngbNavItem>
         <a routerLink="/rechercher">
@@ -22,7 +22,7 @@
       <li ngbNavItem>
         <a routerLink="/profil">
           <div class="user-info">
-            <div class="button">
+            <button class="button">
               <a [routerLink]="['/profil']">
                 <ng-container *ngIf="connectedUser">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -32,7 +32,7 @@
                   {{ connectedUser.user_name }}
                 </ng-container>
               </a>
-            </div>
+            </button>
             
             <a routerLink="/login">
 

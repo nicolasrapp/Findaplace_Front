@@ -4,6 +4,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {RatingReview} from './lil_component/ratingStars/rating-review.component';
+import {StarComponent} from './lil_component/ratingStars/star.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CarteComponent } from './carte/carte.component';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -28,6 +30,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
+import { MyAdressesComponent } from './my-adresses/my-adresses.component';
+import { MyReviewComponent } from './my-review/my-review.component';
+import { TagComponent } from './lil_component/tags/tags.component';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -42,7 +47,12 @@ import { Loader } from '@googlemaps/js-api-loader';
     RegisterComponent,
     ProfilComponent,
     AddfriendsComponent,
-    FilterUsersPipe
+    FilterUsersPipe,
+    MyAdressesComponent,
+    MyReviewComponent,
+    StarComponent,
+    RatingReview,
+    TagComponent
   ],
   imports: [
     BrowserModule,
