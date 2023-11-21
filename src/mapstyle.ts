@@ -63,7 +63,8 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#dfd2ae"
+        "color": "#dfd2ae",
+
       }
     ]
   },
@@ -72,7 +73,9 @@
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#93817c"
+        "color": "#93817c",
+        "visibility": "off"
+
       }
     ]
   },
@@ -89,7 +92,9 @@
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#a5b076"
+        "color": "#a5b076",
+        "visibility": "off"
+
       }
     ]
   },
@@ -98,7 +103,8 @@
     "elementType": "labels.text",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "off",
+
       }
     ]
   },

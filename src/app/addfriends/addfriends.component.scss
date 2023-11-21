@@ -27,6 +27,8 @@
     li {
       margin: 10px 0;
       text-align: left;
+      margin-left: 10px;
+      font-style: italic;
   
       label {
         color: white;
@@ -50,6 +52,15 @@
       background-color: white;
       color: #FFC480;
     }
+  }
+
+  .following-label {
+    background-color: #FFEAB2;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-style: italic;
   }
 
   .friend {
