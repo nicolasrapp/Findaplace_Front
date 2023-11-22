@@ -4,15 +4,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 25px; /* Adjust padding for spacing */    
+    padding: 25px;
+    min-width: 850px;
+
+    a{
+      color: white;
+      text-decoration: none;
+      margin: 5px 15px 0 15px;
+      height: 50px;
+      text-align: center;
+      border-radius: 4px;
+    }
+    
+    .navLink {
+      transition: background-color 0.3s, color 0.3s;
+      padding: 10px 15px 2px 15px;
+      font-size: 15px;
+      font-weight: 500;
+      &:hover {
+        background-color: white;
+        color: #FFC480;
+      }
+    }
     .navbar-content {
-      display: flex; /* Create a flex container for the title and links */
-      align-items: center; /* Vertically center the content */
+      display: flex; 
+      align-items: center; 
   
       h1 {
         color: white;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 28px;
         margin: 0;
         margin-right: 15px; /* Remove any margin on the title */
       }
@@ -23,15 +44,7 @@
       }
     }
   
-    a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      // &:hover {
-      //   color: black;
-      // }
-    }
-  
+    
     .navbar-right {
       display: flex;
       align-items: center;
@@ -40,6 +53,7 @@
         width: 20px;
         height: 20px;
         margin-left: 10px;
+        
       }
     }
   }
@@ -48,18 +62,4 @@
     display: flex;
   }
 
-  .button {
-    background-color: #FFC480;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; // Add a smooth transition
-  
-    &:hover {
-      background-color: white;
-      color: #FFC480;
-    }
-  }
   

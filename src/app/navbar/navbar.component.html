@@ -1,29 +1,27 @@
   <ul ngbNav #nav="ngbNav" class="shadow-sm nav-tabs">
     <div class="navbar-content">
       <a routerLink="/home">
-
-      <li ngbNavItem>
-        <h1>FindaPlace</h1>
-      </li>
+        <li ngbNavItem>
+          <h1>FindaPlace</h1>
+        </li>
       </a>
-      <li ngbNavItem>
-        <a routerLink="/carte">Carte</a>
-      </li>
-      <li ngbNavItem>
-        <a routerLink="/my_adresses">Mes adresses</a>
-      </li>
-      <li ngbNavItem>
-        <a routerLink="/rechercher">
-          <i class="fas fa-search"></i>
-        </a>
-      </li>
+      <a class="navLink" routerLink="/carte">
+        <li ngbNavItem>Carte</li>
+      </a>
+      <a class="navLink" routerLink="/my_adresses">
+        <li ngbNavItem>Mes adresses</li>
+      </a>
+      <a class="navLink" routerLink="/rechercher">
+        <li ngbNavItem><i class="fas fa-search"></i></li>
+      </a>
     </div>
     <div class="navbar-right">
-      <li ngbNavItem>
-        <a routerLink="/profil">
+      
+        
           <div class="user-info">
-            <button class="button">
-              <a [routerLink]="['/profil']">
+            
+              <a class="navLink" [routerLink]="['/profil']">
+                <li ngbNavItem>
                 <ng-container *ngIf="connectedUser">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -31,19 +29,16 @@
                   </svg>
                   {{ connectedUser.user_name }}
                 </ng-container>
+              </li>
               </a>
-            </button>
-            
-            <a routerLink="/login">
 
-            <button class="button" type="submit">Deconnexion</button>
+           
+            
+            <a class="navLink" routerLink="/login">
+              <li ngbNavItem>Deconnexion</li>
             </a>
           </div>
-
-        </a>
         
-        
-      </li>
     </div>
   </ul>
   <div [ngbNavOutlet]="nav"></div>
