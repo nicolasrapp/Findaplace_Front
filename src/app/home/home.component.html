@@ -5,7 +5,7 @@
 <button mat-raised-button (click)="openDialog()"> 
   Pick one 
 </button> 
-<app-review-popup (placeChanged)="getPlace($event)"></app-review-popup>
+<!-- <app-review-popup (placeChanged)="getPlace($event)"></app-review-popup> -->
 <div *ngIf="fromValue">
   <h2>{{ fromValue.name }}</h2>
   <img [src]="fromValue.imageUrl">

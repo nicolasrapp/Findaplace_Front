@@ -7,10 +7,12 @@
       #placesRef="ngx-places"
       type="text"
       matInput
+      (onAddressChange)="onPlaceSelected($event)"
       [placeholder]="placeholder"
       [options]="options"
     />
   </mat-form-field>
-  <button mat-flat-button color="primary">Primary</button>
 </form>
+<button mat-flat-button color="primary" (click)="nextStep()">Suite</button>
+
 

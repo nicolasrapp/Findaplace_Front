@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { Loader } from '@googlemaps/js-api-loader';
 import { mapstyle } from 'src/mapstyle';
+import { MapService } from '../../services/map.service';
 
 @Component({
   selector: 'app-carte',
   templateUrl: './carte.component.html',
-  styleUrls: ['./carte.component.scss']  
+  styleUrls: ['./carte.component.scss']  ,
 })
 export class CarteComponent implements OnInit, AfterViewInit {
   @ViewChild('googleMapElement', { static: false }) googleMapElement!: GoogleMap;
@@ -20,6 +21,9 @@ export class CarteComponent implements OnInit, AfterViewInit {
   zoom = 13;
   markers: google.maps.Marker[] = [];
   googleMap: google.maps.Map | undefined;
+
+  autoCenterMap = true;
+  loadingMap = true;
 
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = event.latLng.toJSON();
@@ -34,7 +38,12 @@ export class CarteComponent implements OnInit, AfterViewInit {
     styles: mapstyle
   };
 
-  constructor(private loader: Loader) {}
+  constructor(private mapService: MapService) {
+    this.center = {
+      lat: 48.864716,
+      lng: 2.349014
+    };
+  }
 
   getBounds(): google.maps.LatLngBounds | undefined {
     if (this.googleMap) {
@@ -52,41 +61,36 @@ export class CarteComponent implements OnInit, AfterViewInit {
             lng: position.coords.longitude,
           };
 
-          // this.infoWindow.setPosition(pos);
-          // this.infoWindow.setContent("Location found.");
-          // console.log("Location found");
-          // this.infoWindow.open(this.googleMap);
-          // this.googleMap?.setCenter(pos);
-          this.center = pos;
+          if (this.googleMap) {
+            if (this.autoCenterMap) {
+              this.googleMap.setCenter(pos);
+              this.googleMap.setZoom(13);
+              this.autoCenterMap = false;
+            } else {
+              // Optionally, pan to the user's location smoothly without changing zoom
+              this.googleMap.panTo(pos);
+              this.googleMap.setZoom(14);
+            }
+            this.mapService.mapBounds = this.googleMap.getBounds();
+          }
+          this.loadingMap = false; // Set loading to false when the map is ready
         },
-        () => {
-          this.handleLocationError(true, this.infoWindow, this.center);
-        }
+        (error) => {
+          console.error('Geolocation error:', error);
+          // Handle geolocation error more gracefully, e.g., display a user-friendly message
+          this.loadingMap = false;
+        },
+        { maximumAge: 60000, timeout: 5000, enableHighAccuracy: false }
       );
     } else {
       // Browser doesn't support Geolocation
-      this.handleLocationError(false, this.infoWindow, this.center);
+      console.error("Browser doesn't support geolocation.");
+      this.loadingMap = false;
     }
   }
 
-  handleLocationError(
-    browserHasGeolocation: boolean,
-    infoWindow: google.maps.InfoWindow,
-    pos: google.maps.LatLngLiteral
-  ) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-      browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation."
-    );
-    console.log("Location: ", pos);
-    infoWindow.open(this.googleMap);
-  }
-
-  infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
   ngOnInit() {
-
+    // this.moveToLocation();
   }
 
   ngAfterViewInit(): void {
@@ -94,6 +98,19 @@ export class CarteComponent implements OnInit, AfterViewInit {
     const map = this.googleMapElement.googleMap;
     if (map) {
       this.googleMap = map;
+      this.googleMap.addListener('tilesloaded', () => {
+        if (this.autoCenterMap) {
+          this.moveToLocation();
+
+          console.log("autocenter:", this.autoCenterMap)
+          // Allow free map movement after initial centering
+          // this.autoCenterMap = false;
+
+          // // Remove the event listener to avoid unnecessary re-centering
+          // google.maps.event.removeListener(tilesLoadedListener);
+        }
+      });
+      // this.mapService.setGoogleMapsApi(this.loader);
     }
   }
 

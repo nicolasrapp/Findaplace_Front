@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service'; // Import the user service
+import { UserService } from '../../services/user.service'; // Import the user service
 import { MatDialog } from '@angular/material/dialog';
-import { ReviewPopupComponent } from '../review-popup/review-popup.component';
+import { PlaceSearchResult, ReviewPopupComponent } from '../review-popup/review-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +10,13 @@ import { ReviewPopupComponent } from '../review-popup/review-popup.component';
 })
 export class HomeComponent implements OnInit {
   connectedUser: any; // You can define a User type/interface
+
+  fromValue: PlaceSearchResult | undefined;
+
+  getPlace(placeChanged : PlaceSearchResult) {
+    this.fromValue = placeChanged;
+  }
+  
 
   constructor(private userService: UserService, public dialog: MatDialog) {}
 
@@ -25,8 +32,9 @@ export class HomeComponent implements OnInit {
   
   openDialog(): void { 
     let dialogRef = this.dialog.open(ReviewPopupComponent, { 
-      width: '250px', 
-      data: "right click"
+      width: '1000px', 
+      height: '200px',
+      data: {}
     }); 
   
     // dialogRef.afterClosed().subscribe(result => { 

@@ -1,0 +1,13 @@
+<form (ngSubmit)="submitRating()" #reviewForm="ngForm">
+      <h2>{{ placeName }}</h2> 
+    <mat-form-field>
+      <mat-label>Rating</mat-label>
+      <ngx-stars (ratingOutput)="onRatingSet($event)"></ngx-stars>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <textarea matInput #input placeholder="Comment" [(ngModel)]="comment" name="comment"></textarea>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit" [disabled]="reviewForm.invalid">Submit Review</button>
+  </form>

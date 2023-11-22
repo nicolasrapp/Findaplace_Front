@@ -4,27 +4,30 @@ import {
   EventEmitter,
   Output,
   OnInit,
-  AfterViewInit,
   Input,
   ElementRef,
   NgZone,
 } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { NgxGpAutocompleteDirective, NgxGpAutocompleteModule } from '@angular-magic/ngx-gp-autocomplete';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CarteComponent } from '../carte/carte.component';
+import { MapService } from '../../services/map.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ReviewRatingPopupComponent } from '../review-rating-popup/review-rating-popup.component';
+import { ReviewService } from '../../services/review.service';
+import { UserService } from '../../services/user.service';
+import { DatePipe, formatDate } from '@angular/common';
+import { PlaceService } from 'src/services/place.service';
+import { ReviewdataService } from '../reviewdata.service';
 
 export interface PlaceSearchResult {
-  place_id?: string,
+  id?: null,
+  id_place_google?: string,
   address?: string;
-  location?: google.maps.LatLng;
-  imageUrl?: string;
-  iconUrl?: string;
+  location?: string;
+  images?: string;
+  icon?: string;
   name?: string;
 }
 
@@ -54,10 +57,21 @@ export class ReviewPopupComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete | undefined;
 
+  selectedPlace: PlaceSearchResult | undefined;
 
-  // carteComponent: CarteComponent | undefined;
+  placeData: any;
 
-  constructor( private ngZone: NgZone) {
+  connectedUser: any;
+
+  constructor(public dialogRef: MatDialogRef<ReviewPopupComponent>,
+    public dialog: MatDialog,
+     private ngZone: NgZone, 
+     private mapService: MapService,
+     private reviewDataService: ReviewdataService,
+     private reviewService: ReviewService,
+     private placeService: PlaceService,
+     private userService: UserService) {
+    // const api = this.mapService.getGoogleMapsApi();
     // Access the bounds from the CarteComponent
     // const bounds = this.carteComponent.getBounds();
     // if (bounds) {
@@ -66,65 +80,56 @@ export class ReviewPopupComponent implements OnInit {
     // }
   }
 
-  // findLocation() {
-  //   pos: google.maps.LatLngBounds;
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position: GeolocationPosition) => {
-  //         pos = new google.maps.LatLng.getCenter( {
-  //           lat: position.coords.latitude,
-  //           lng: position.coords.longitude,
-  //         });
-  //       }
-  //     );
-  //   }
-  // }
-  parisBounds: google.maps.LatLngBounds = new google.maps.LatLngBounds(
+  bounds: google.maps.LatLngBounds = new google.maps.LatLngBounds(
     { lat: 48.815573, lng: 2.224199 }, // Southwest corner
     { lat: 48.902145, lng: 2.469920 } // Northeast corner
   );
 
-  actualBounds: google.maps.LatLngBounds = new google.maps.LatLngBounds
-
   options = {
     types: ["restaurant"],
-    // origin: {
-    //   lat: 48.864716,
-    //   lng: 2.349014
-    // },
-    // bounds: this.carteComponent.getBounds(),
-    bounds: this.parisBounds,
+    bounds: this.bounds,
     componentRestrictions: { country: 'FR' },
   };
 
+
   ngOnInit() {
-    // Use the Loader service to load data or perform actions
-    
+    this.connectedUser = this.userService.getConnectedUser();
+    const mapBounds = this.mapService.mapBounds;
+    if (mapBounds) {
+      // Use the map bounds as needed
+      this.bounds = mapBounds;
+      this.options = {
+        types: ["restaurant"],
+        bounds: mapBounds,
+        componentRestrictions: { country: 'FR' },
+      };
+      console.log(this.options.bounds)
+      console.log('Map Bounds:', mapBounds.toJSON());
+    } else {
+      this.bounds = new google.maps.LatLngBounds(
+        { lat: 48.815573, lng: 2.224199 }, // Southwest corner
+        { lat: 48.902145, lng: 2.469920 } // Northeast corner
+      );
+    }
+
   }
 
-  ngAfterViewInit() {
-    this.autocomplete = new google.maps.places.Autocomplete(
-      this.input.nativeElement
-    );
-    this.autocomplete.addListener('place_changed', () => {
-      const place = this.autocomplete?.getPlace();
+  async ngAfterViewInit() {
+  }
 
-      console.log("in function");
-      const result: PlaceSearchResult = {
-        place_id: place?.place_id,
-        address: this.input.nativeElement.value,
-        name: place?.name,
-        location: place?.geometry?.location,
-        imageUrl: this.getPhotoUrl(place),
-        iconUrl: place?.icon,
-      };
-      this.ngZone.run(() => {
-        console.log("here", result);
-        this.placeChanged.emit(result);
-      }
-      );
-
-    });
+  onPlaceSelected(place: google.maps.places.PlaceResult) {
+    // await this.getBoundsFromLocation();
+    const formattedPlace: PlaceSearchResult = {
+      id: null,
+      id_place_google: place.place_id,
+      address: this.input.nativeElement.value,
+      name: place.name,
+      location: place.geometry?.location?.toString(),
+      images: this.getPhotoUrl(place),
+      icon: place.icon,
+    }
+    this.selectedPlace = formattedPlace;
+    console.log(this.selectedPlace);
   }
 
   getPhotoUrl(
@@ -135,7 +140,99 @@ export class ReviewPopupComponent implements OnInit {
       : undefined;
   }
 
-  // onAddressComponentsChange(address: any) {
-  //   console.log('Address Components:', address);
-  // }
+  nextStep(): void {
+    console.log(this.connectedUser);
+
+    this.placeService.getPlaceByGoogleId(this.selectedPlace?.id_place_google)
+    .subscribe(
+      (data: any) => {
+        // Handle the data here
+        this.placeData = data;
+        console.log(this.placeData);
+      },
+      (error: any) => {
+        console.error('Error fetching place data:', error);
+      }
+    );
+
+
+    if(this.placeData != null) {
+      console.log("place already exists");
+      const reviewData = {
+        id: '',
+        rate: 0,
+        comment: "",
+        date_publication: formatDate(new Date(), 'yyyy-MM-dd', 'fr'),
+        users: this.connectedUser,
+        place: this.placeData
+      };
+
+      console.log(reviewData);
+
+      // Now, make the final request
+      this.reviewService.registerReview(reviewData).subscribe(
+        (response) => {
+          console.log('Review registered successfully:', response);
+          // Close the current dialog and open a new one
+          this.reviewDataService.setReviewData(this.placeData);
+          this.dialogRef.close();
+          this.dialog.open(ReviewRatingPopupComponent);
+        },
+        (error) => {
+          console.error('Error registering review:', error);
+        }
+      );
+    } else {
+      console.log("place doesn't exist");
+      this.placeService.registerPlace(this.selectedPlace).subscribe(
+        (response) => {
+          console.log('Place registered successfully:', response);
+    
+          // Now, make the next request inside this callback
+          this.placeService.getPlaceByGoogleId(this.selectedPlace?.id_place_google)
+            .subscribe(
+              (data: any) => {
+                // Handle the data here
+                this.placeData = data;
+                console.log(this.placeData);
+    
+                // Only after getting placeData, proceed with creating reviewData
+                const reviewData = {
+                  id: '',
+                  rate: 0,
+                  comment: "",
+                  date_publication: formatDate(new Date(), 'yyyy-MM-dd', 'fr'),
+                  users: this.connectedUser,
+                  place: this.placeData
+                };
+    
+                console.log(reviewData);
+    
+                // Now, make the final request
+                this.reviewService.registerReview(reviewData).subscribe(
+                  (response) => {
+                    console.log('Review registered successfully:', response);
+                    // Close the current dialog and open a new one
+                    this.reviewDataService.setReviewData(this.placeData);
+                    this.dialogRef.close();
+                    this.dialog.open(ReviewRatingPopupComponent);
+                  },
+                  (error) => {
+                    console.error('Error registering review:', error);
+                  }
+                );
+              },
+              (error: any) => {
+                console.error('Error fetching place data:', error);
+              }
+            );
+        },
+        (error) => {
+          console.error('Error registering place:', error);
+        }
+      );
+    }
+    
+  }
+
 }

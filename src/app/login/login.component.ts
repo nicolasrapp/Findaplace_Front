@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { users } from 'src/users';
-import { UserService } from '../user.service';
+import { UserService } from '../../services/user.service';
 import { APIURL } from 'src/config';
 import { HttpClient } from '@angular/common/http'; // Import the HttpClient
 

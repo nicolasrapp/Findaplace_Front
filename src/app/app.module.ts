@@ -1,4 +1,4 @@
-import { Injectable, NgModule } from '@angular/core';
+import { Injectable, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -33,6 +33,9 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { MyAdressesComponent } from './my-adresses/my-adresses.component';
 import { MyReviewComponent } from './my-review/my-review.component';
 import { TagComponent } from './lil_component/tags/tags.component';
+import { MapService } from '../services/map.service';
+import { ReviewRatingPopupComponent } from './review-rating-popup/review-rating-popup.component';
+import { NgxStarsModule } from 'ngx-stars';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -68,6 +71,7 @@ import { TagComponent } from './lil_component/tags/tags.component';
     MatFormFieldModule,
     MatButtonModule,
     FormsModule,
+    NgxStarsModule,
     ReviewPopupComponent
   ],
   providers: [
@@ -78,6 +82,8 @@ import { TagComponent } from './lil_component/tags/tags.component';
         libraries: ['places']
       })
     },
+    { provide: LOCALE_ID, useValue: 'fr-FR'},
+    MapService
   ],  
   bootstrap: [AppComponent]
 })
