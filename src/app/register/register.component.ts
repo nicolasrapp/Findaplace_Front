@@ -21,8 +21,8 @@ export class RegisterComponent {
     const newUser = {
       id: '',
       user_name: this.pseudo,
-      last_name: this.nom,
       first_name: this.prenom,
+      last_name: this.nom,
       password: this.password,
       email: this.email,
     };

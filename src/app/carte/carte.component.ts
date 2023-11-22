@@ -1,17 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { Loader } from '@googlemaps/js-api-loader';
 import { mapstyle } from 'src/mapstyle';
-import { MapService } from '../../services/map.service';
+import { PlaceService } from 'src/services/place.service';
 
 @Component({
   selector: 'app-carte',
   templateUrl: './carte.component.html',
-  styleUrls: ['./carte.component.scss']  ,
+  styleUrls: ['./carte.component.scss']  
 })
 export class CarteComponent implements OnInit, AfterViewInit {
   @ViewChild('googleMapElement', { static: false }) googleMapElement!: GoogleMap;
+
+  Allplaces: any[] = [];
 
   display: any;
   center: google.maps.LatLngLiteral = {
@@ -21,9 +23,6 @@ export class CarteComponent implements OnInit, AfterViewInit {
   zoom = 13;
   markers: google.maps.Marker[] = [];
   googleMap: google.maps.Map | undefined;
-
-  autoCenterMap = true;
-  loadingMap = true;
 
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = event.latLng.toJSON();
@@ -38,12 +37,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
     styles: mapstyle
   };
 
-  constructor(private mapService: MapService) {
-    this.center = {
-      lat: 48.864716,
-      lng: 2.349014
-    };
-  }
+  constructor(private loader: Loader, private placeservice: PlaceService) {}
 
   getBounds(): google.maps.LatLngBounds | undefined {
     if (this.googleMap) {
@@ -61,56 +55,63 @@ export class CarteComponent implements OnInit, AfterViewInit {
             lng: position.coords.longitude,
           };
 
-          if (this.googleMap) {
-            if (this.autoCenterMap) {
-              this.googleMap.setCenter(pos);
-              this.googleMap.setZoom(13);
-              this.autoCenterMap = false;
-            } else {
-              // Optionally, pan to the user's location smoothly without changing zoom
-              this.googleMap.panTo(pos);
-              this.googleMap.setZoom(14);
-            }
-            this.mapService.mapBounds = this.googleMap.getBounds();
-          }
-          this.loadingMap = false; // Set loading to false when the map is ready
+         
+          this.center = pos;
         },
-        (error) => {
-          console.error('Geolocation error:', error);
-          // Handle geolocation error more gracefully, e.g., display a user-friendly message
-          this.loadingMap = false;
-        },
-        { maximumAge: 60000, timeout: 5000, enableHighAccuracy: false }
+        () => {
+          this.handleLocationError(true, this.infoWindow, this.center);
+        }
       );
     } else {
       // Browser doesn't support Geolocation
-      console.error("Browser doesn't support geolocation.");
-      this.loadingMap = false;
+      this.handleLocationError(false, this.infoWindow, this.center);
     }
   }
 
-  ngOnInit() {
-    // this.moveToLocation();
+  handleLocationError(
+    browserHasGeolocation: boolean,
+    infoWindow: google.maps.InfoWindow,
+    pos: google.maps.LatLngLiteral
+  ) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    console.log("Location: ", pos);
+    infoWindow.open(this.googleMap);
   }
+
+  infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
+  ngOnInit() {
+
+    this.placeservice.getAllPlaces().subscribe((data: any) =>{
+
+      this.Allplaces = data;
+      console.log(this.Allplaces)
+      this.Allplaces.forEach(place => {
+        // Extract latitude and longitude from the location string
+        const [latitudeStr, longitudeStr] = place.location
+          .replace('(', '')
+          .replace(')', '')
+          .split(', ');
+
+        // Parse the strings into numbers
+        const latitude = parseFloat(latitudeStr);
+        const longitude = parseFloat(longitudeStr);
+
+        this.addMarker(latitude, longitude, place.name)
+
+  })
+})
+}
 
   ngAfterViewInit(): void {
     // Now, the Google Map should be initialized.
     const map = this.googleMapElement.googleMap;
     if (map) {
       this.googleMap = map;
-      this.googleMap.addListener('tilesloaded', () => {
-        if (this.autoCenterMap) {
-          this.moveToLocation();
-
-          console.log("autocenter:", this.autoCenterMap)
-          // Allow free map movement after initial centering
-          // this.autoCenterMap = false;
-
-          // // Remove the event listener to avoid unnecessary re-centering
-          // google.maps.event.removeListener(tilesLoadedListener);
-        }
-      });
-      // this.mapService.setGoogleMapsApi(this.loader);
     }
   }
 
@@ -124,11 +125,10 @@ export class CarteComponent implements OnInit, AfterViewInit {
     anchor: new google.maps.Point(0, 32),
   };
 
-  addMarker() {
-    // Create a marker using the input data (address and restaurant name)
+  addMarker(lati: any, long: any, title: any) {
     const newMarker = new google.maps.Marker({
-      position: { lat: this.center.lat, lng: this.center.lng },
-      title: "title",
+      position: { lat: lati, lng: long },
+      title: title,
       map: this.googleMap,
       icon: this.image,
     });
@@ -139,4 +139,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
     // Add the marker to the markers array
     this.markers.push(newMarker);
   }
+
+
+
 }
