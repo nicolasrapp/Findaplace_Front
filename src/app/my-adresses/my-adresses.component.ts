@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReviewService } from '../review.service';
+import { ReviewService } from 'src/services/review.service';
 
 @Component({
   selector: 'app-my-adresses',
@@ -19,7 +19,7 @@ export class MyAdressesComponent {
   }
 
   loadReviews() {
-    this.reviewService.getAllReview().subscribe(response => {
+    this.reviewService.getAllReviews().subscribe(response => {
       this.reviews = response;
       console.log(this.reviews);
     });

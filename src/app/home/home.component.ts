@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service'; // Import the user service
 import { MatDialog } from '@angular/material/dialog';
 import { PlaceSearchResult, ReviewPopupComponent } from '../review-popup/review-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
   
 
-  constructor(private userService: UserService, public dialog: MatDialog) {}
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog, ) {}
 
   ngOnInit() {
     this.connectedUser = this.userService.getConnectedUser();
