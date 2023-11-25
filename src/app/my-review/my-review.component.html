@@ -2,10 +2,10 @@
     <div class="photo_text">
     <div class="text">
     <div class="place-name">
-        <h1>Titre review</h1>
+        <h1>{{review.place.name}}</h1>
     </div>
     <div class="address">
-        <p>38 rue de Buci, 75006</p>
+        <p>{{adress}}</p>
     </div>
     
     <div class="rating-line">
@@ -23,11 +23,9 @@
         <p>{{review.comment}}</p>
     </div>
     </div>
-    <div class="photos">
         <div class="photo">
-            <img src="./assets/pizza1.jpeg">
+            <img src={{review.place.images}}>
         </div>
-    </div>
     </div>
     <div class="tag_wrapper">
         <app-tag *ngFor="let tag of review.tags" [tagName]="tag.name" [tagColor] = "tag.color"></app-tag>

@@ -13,5 +13,10 @@
     margin:2%;
     display: flex;
     flex-wrap: wrap; 
-    justify-content: space-around;
+    justify-content: space-between;
+
+    #container_review{
+        flex: 0 1 calc(25% - 20px);
+
+    }
 }

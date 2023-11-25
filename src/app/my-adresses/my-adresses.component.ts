@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ReviewService } from 'src/services/review.service';
+import { ReviewService } from '../../services/review.service';
+import { UserService} from '../../services/user.service'
 
 @Component({
   selector: 'app-my-adresses',
@@ -10,30 +11,18 @@ export class MyAdressesComponent {
 
   reviews: any;
 
-  constructor(private reviewService: ReviewService) {
+  constructor(private reviewService: ReviewService, private userService : UserService) {
     this.loadReviews();
    }
 
-  ngOnInit() {
-    
-  }
-
   loadReviews() {
-    this.reviewService.getAllReviews().subscribe(response => {
+    const connectedUserString : string | null = localStorage.getItem('connectedUser');
+    const connectedUser = connectedUserString ? JSON.parse(connectedUserString) : null;
+    this.reviewService.getReviewByUserId(connectedUser.id).subscribe(response => {
       this.reviews = response;
       console.log(this.reviews);
     });
    
   }
-/*
-  private reviews2 = this.reviewService.getAllReview().subscribe(
-    (data) => {
-      this.monObjet = data;
-      console.log('Données récupérées avec succès :', this.monObjet);
-    },
-    (error) => {
-      console.error('Une erreur s\'est produite lors de la récupération des données :', error);
-    }
-  );*/
 
 }
