@@ -47,5 +47,6 @@ export class AddfriendsComponent implements OnInit {
   FollowUser(user: any){
     const userId = user.id
     this.userService.addFriend(userId)
+    console.log("here")
   }
 }

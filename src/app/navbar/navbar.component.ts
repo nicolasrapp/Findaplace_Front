@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.connectedUser = this.userService.getConnectedUser();
+    const connectedUserString : string | null = localStorage.getItem('connectedUser');
+    this.connectedUser = connectedUserString ? JSON.parse(connectedUserString) : null;
   }
 }
