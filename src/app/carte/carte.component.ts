@@ -62,9 +62,8 @@ export class CarteComponent implements OnInit, AfterViewInit {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-
-         
           this.center = pos;
+          this.googleMap?.setZoom(14);
         },
         () => {
           this.handleLocationError(true, this.infoWindow, this.center);
@@ -125,9 +124,9 @@ export class CarteComponent implements OnInit, AfterViewInit {
 }
 
   image = {
-    url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+    url: "assets/pins/red.png",
     // This marker is 20 pixels wide by 32 pixels high.
-    size: new google.maps.Size(20, 32),
+    scaledSize: new google.maps.Size(36, 52),
     // The origin for this image is (0, 0).
     origin: new google.maps.Point(0, 0),
     // The anchor for this image is the base of the flagpole at (0, 32).
@@ -282,7 +281,7 @@ CreatePopupContent(place: any){
       <p>Italian</p>
   </div>
   
-  <div class="photos">
+  <div class="photos" *ngIf="place.images">
       <div class="photo">
           <img src=${place.images}>
       </div>

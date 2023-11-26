@@ -37,6 +37,7 @@ import { MapService } from '../services/map.service';
 import { ReviewRatingPopupComponent } from './review-rating-popup/review-rating-popup.component';
 import { NgxStarsModule } from 'ngx-stars';
 import { PlaceComponent } from './place/place.component';
+import { ShowreviewComponent } from './showreview/showreview.component';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -58,6 +59,7 @@ import { PlaceComponent } from './place/place.component';
     RatingReview,
     TagComponent,
     PlaceComponent,
+    ShowreviewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,5 @@
+@use '../../variables' as v;
+
 .main-container {
     display: flex; /* Use flexbox to arrange the components side by side */
     justify-content: space-between; /* Add space between the components */
@@ -14,8 +16,8 @@
 }
 
 .profile-container {
-    background-color: #FFC480;
-    border: 1px solid #FFC480;
+    background-color: v.$theme-secondary;
+    border: 1px solid v.$theme-secondary;
     border-radius: 5px;
     width: 300px;
     margin: 0 auto;

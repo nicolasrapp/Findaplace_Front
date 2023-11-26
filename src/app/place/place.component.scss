@@ -1,3 +1,5 @@
+@use '../../variables' as v;
+
 #id_container_adresses {
     margin-top: 150px; // Adjust the margin as needed
     display: flex;
@@ -5,8 +7,8 @@
     align-items: flex-start;
   
     .infoplace {
-      background-color: #FFC480;
-      border: 1px solid #FFC480;
+      background-color: v.$theme-secondary;
+      border: 1px solid v.$theme-secondary;
       border-radius: 5px;
       width: 400px; // Set the container width to 400px
       margin: 0 auto;

@@ -1,35 +1,40 @@
 /* navbar.component.scss */
+@use '../../variables' as v;
+
 .nav-tabs {
-    background-color: #FFC480;
+    background-color: v.$theme-secondary;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px;
+    justify-items: center;
+    padding: 25px 150px;
     min-width: 850px;
 
     a{
-      color: white;
+      color: v.$theme-background-lighter;
       text-decoration: none;
       margin: 5px 15px 0 15px;
-      height: 50px;
+      // height: 50px;
       text-align: center;
       border-radius: 4px;
     }
     
     .navLink {
       transition: background-color 0.3s, color 0.3s;
-      padding: 10px 15px 2px 15px;
+      // padding: 10px;
+      align-items: center;
+      text-align: center;
       font-size: 15px;
       font-weight: 500;
       &:hover {
-        background-color: white;
-        color: #FFC480;
+        // background-color: white;
+        color: white;
       }
     }
-    .navbar-content {
+    .navbar-left {
       display: flex; 
       align-items: center; 
-  
+      justify-content: center;
       h1 {
         color: white;
         font-weight: 600;
@@ -48,7 +53,7 @@
     .navbar-right {
       display: flex;
       align-items: center;
-  
+      justify-content: center;
       svg {
         width: 20px;
         height: 20px;

@@ -1,9 +1,11 @@
+@use '../../variables' as v;
+
 #id_container_adresses{
     margin:2%;
     h1{
         margin-top: 1%;
         margin-left: 40%;
-        color: #7ABB88;
+        color: v.$theme-tertiary;
         font-weight: 550;
         font-size: 30px;
     }

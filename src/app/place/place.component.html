@@ -3,9 +3,12 @@
 
     <div class="infoplace">
         <h1> {{ place.name }}</h1>
-
         <p class="adresse">{{ place.address }}</p>
         <img src={{place.images}}>
+    </div>
+
+    <div id="div_list_resto">
+        <app-showreview id="container_review" *ngFor="let review of reviews" [review]="review" ></app-showreview>
     </div>
 
 </div>
