@@ -1,15 +1,15 @@
   <ul ngbNav #nav="ngbNav" class="shadow-sm nav-tabs">
-    <div class="navbar-content">
+    <div class="navbar-left">
       <a routerLink="/home">
         <li ngbNavItem>
-          <h1>FindaPlace</h1>
+          <h1>Spot</h1>
         </li>
       </a>
-      <a class="navLink" routerLink="/carte">
+      <a class="navLink" routerLink="/home">
         <li ngbNavItem>Carte</li>
       </a>
       <a class="navLink" routerLink="/my_adresses">
-        <li ngbNavItem>Mes adresses</li>
+        <li ngbNavItem>Mes Spots</li>
       </a>
       <a class="navLink" routerLink="/rechercher">
         <li ngbNavItem><i class="fas fa-search"></i></li>
@@ -35,10 +35,9 @@
            
             
             <a class="navLink" routerLink="/login">
-              <li ngbNavItem>Deconnexion</li>
+              <li ngbNavItem>Déconnexion</li>
             </a>
           </div>
-        
     </div>
   </ul>
   <div [ngbNavOutlet]="nav"></div>

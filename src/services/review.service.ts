@@ -31,4 +31,8 @@ export class ReviewService {
   getReviewByPlaceId(id: any) {
     return this.http.get(`${APIURL}/review/place/${id}`);
   }
+
+  getReviewForPlaceAndUser(place_id: any, user_id: any) {
+    return this.http.get(`${APIURL}/review/place/${place_id}/user/${user_id}`);
+  }
 }

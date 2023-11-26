@@ -1,4 +1,4 @@
-<div     id="map"
+<div class="map" id="map"
 >
 <google-map
   #googleMapElement
@@ -10,10 +10,11 @@
   (mapMousemove)="move($event)"
   [options]="mapOptions"
 >
-<button (click)="moveToLocation()">Pan to current location</button>
 </google-map>
-
-<button mat-raised-button (click)="addMarker()">Add Marker</button>
-
+<button mat-raised-button class="location-button" (click)="moveToLocation()">
+  <span class="material-icons">
+    my_location
+    </span>
+  </button>
 </div>
 

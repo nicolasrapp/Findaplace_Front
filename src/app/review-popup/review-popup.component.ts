@@ -20,6 +20,7 @@ import { UserService } from '../../services/user.service';
 import { DatePipe, formatDate } from '@angular/common';
 import { PlaceService } from 'src/services/place.service';
 import { ReviewdataService } from '../reviewdata.service';
+import { PlacedataService } from '../placedata.service';
 
 export interface PlaceSearchResult {
   id?: null,
@@ -68,6 +69,7 @@ export class ReviewPopupComponent implements OnInit {
      private ngZone: NgZone, 
      private mapService: MapService,
      private reviewDataService: ReviewdataService,
+     private placeDataService: PlacedataService,
      private reviewService: ReviewService,
      private placeService: PlaceService,
      private userService: UserService) {
@@ -149,54 +151,18 @@ export class ReviewPopupComponent implements OnInit {
         // Handle the data here
         this.placeData = data;
         console.log(this.placeData);
-      },
-      (error: any) => {
-        console.error('Error fetching place data:', error);
-      }
-    );
 
-
-    if(this.placeData != null) {
-      console.log("place already exists");
-      const reviewData = {
-        id: '',
-        rate: 0,
-        comment: "",
-        date_publication: formatDate(new Date(), 'yyyy-MM-dd', 'fr'),
-        users: this.connectedUser,
-        place: this.placeData
-      };
-
-      console.log(reviewData);
-
-      // Now, make the final request
-      this.reviewService.registerReview(reviewData).subscribe(
-        (response) => {
-          console.log('Review registered successfully:', response);
-          // Close the current dialog and open a new one
-          this.reviewDataService.setReviewData(this.placeData);
-          this.dialogRef.close();
-          this.dialog.open(ReviewRatingPopupComponent);
-        },
-        (error) => {
-          console.error('Error registering review:', error);
-        }
-      );
-    } else {
-      console.log("place doesn't exist");
-      this.placeService.registerPlace(this.selectedPlace).subscribe(
-        (response) => {
-          console.log('Place registered successfully:', response);
-    
-          // Now, make the next request inside this callback
-          this.placeService.getPlaceByGoogleId(this.selectedPlace?.id_place_google)
-            .subscribe(
-              (data: any) => {
-                // Handle the data here
-                this.placeData = data;
-                console.log(this.placeData);
-    
-                // Only after getting placeData, proceed with creating reviewData
+        if (this.placeData != null) {
+          console.log("place already exists");
+          this.reviewService.getReviewForPlaceAndUser(this.placeData.id, this.connectedUser.id).subscribe(
+            (data: any) => {
+              if (data != null) {
+                console.log("review already exists");
+                this.reviewDataService.setReviewData(data);
+                this.dialogRef.close();
+                this.dialog.open(ReviewRatingPopupComponent);
+              } else {
+                console.log("review doesn't exist");
                 const reviewData = {
                   id: '',
                   rate: 0,
@@ -205,34 +171,29 @@ export class ReviewPopupComponent implements OnInit {
                   users: this.connectedUser,
                   place: this.placeData
                 };
-    
+  
                 console.log(reviewData);
-    
-                // Now, make the final request
-                this.reviewService.registerReview(reviewData).subscribe(
-                  (response) => {
-                    console.log('Review registered successfully:', response);
-                    // Close the current dialog and open a new one
-                    this.reviewDataService.setReviewData(this.placeData);
-                    this.dialogRef.close();
-                    this.dialog.open(ReviewRatingPopupComponent);
-                  },
-                  (error) => {
-                    console.error('Error registering review:', error);
-                  }
-                );
-              },
-              (error: any) => {
-                console.error('Error fetching place data:', error);
+                this.reviewDataService.setReviewData(reviewData);
+                this.dialogRef.close();
+                this.dialog.open(ReviewRatingPopupComponent);
               }
-            );
-        },
-        (error) => {
-          console.error('Error registering place:', error);
+            },
+            (error: any) => {
+              console.error('Error getting review for place and user:', error);
+            }
+          )
+        } else {
+          console.log("place doesn't exist");
+          console.log("selected place", this.selectedPlace)
+          this.placeDataService.setPlaceData(this.selectedPlace);
+          this.dialogRef.close();
+          this.dialog.open(ReviewRatingPopupComponent);
         }
-      );
-    }
-    
+      },
+      (error: any) => {
+        console.error('Error fetching place data:', error);
+      }
+    );
   }
 
 }

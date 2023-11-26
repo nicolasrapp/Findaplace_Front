@@ -1,7 +1,9 @@
 /* user-list.component.scss */
+@use '../../variables' as v;
+
 .user-list-container {
-    background-color: #FFC480;
-    border: 1px solid #FFC480;
+    background-color: v.$theme-secondary;
+    border: 1px solid v.$theme-secondary;
     border-radius: 5px;
     width: 500px;
     margin: 0 auto;
@@ -40,7 +42,7 @@
     }
   }
   .button {
-    background-color: #FFEAB2;
+    background-color: v.$theme-background;
     color: black;
     border: none;
     border-radius: 5px;
@@ -50,12 +52,12 @@
   
     &:hover {
       background-color: white;
-      color: #FFC480;
+      color: v.$theme-secondary;
     }
   }
 
   .following-label {
-    background-color: #FFEAB2;
+    background-color: v.$theme-background;
     color: black;
     border: none;
     border-radius: 5px;
@@ -65,8 +67,8 @@
 
   .friend {
     display: flex;
-    background-color: #FFEAB2;
-    border: 1px solid #FFEAB2;
+    background-color: v.$theme-background;
+    border: 1px solid v.$theme-background;
     border-radius: 10px;
     margin: 0 auto;
     padding: 10px;
