@@ -15,6 +15,7 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
 
 - Une carte interactive affiche tous les "spots" notés par les utilisateurs.
 - En cliquant sur un spot, les utilisateurs peuvent accéder à un résumé détaillé et être dirigés vers sa page récapitulative.
+- A coté de la carte, vous retrouverez également les dernieres activités de vos amis, leurs dernieres découvertes.
 
 ### 3. Ajout de nouveaux spots
 
