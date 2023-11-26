@@ -33,4 +33,3 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
 4. dans un terminal a la racine du back: docker compose up
 5. Run l'application SpringBoot
 6. dans un terminal a la racine du front: ng serve
-7: rdv localhost:4200
