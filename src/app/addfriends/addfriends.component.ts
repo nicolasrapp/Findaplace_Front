@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { FilterUsersPipe } from '../filterusers.pipe';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+import { NgZone } from '@angular/core';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class AddfriendsComponent implements OnInit {
 
 
 
-  constructor(private userService: UserService, private router: Router,) {}
+  constructor(private userService: UserService, private router: Router,private cdr: ChangeDetectorRef,private zone: NgZone) {}
 
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data: any) => {
@@ -44,9 +45,23 @@ export class AddfriendsComponent implements OnInit {
     return this.followersList && this.followersList.some(follower => follower.id === user.id);
   }
 
-  FollowUser(user: any){
+  followUser(user: any){
     const userId = user.id
     this.userService.addFriend(userId)
-    console.log("here")
+    console.log("follow")
+    this.zone.run(() => this.cdr.detectChanges());
+  }
+
+  unFollowUser(user: any){
+    const userId = user.id
+    this.userService.deleteFriend(userId)
+    //this.zone.run(() => this.cdr.detectChanges());
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Code à exécuter lorsqu'il y a des changements dans les propriétés d'entrée
+    console.log("chagement")
+    
   }
 }

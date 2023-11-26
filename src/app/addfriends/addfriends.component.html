@@ -7,13 +7,13 @@
         <li >
           {{ user.user_name }}
         </li>
-<ng-container *ngIf="isUserFollowing(user)">
-    <label class="following-label">Following</label>
+  <ng-container *ngIf="isUserFollowing(user)">
+    <button class="button" type="submit" (click)="unFollowUser(user)">Unfolow</button>
   </ng-container>
   <ng-container *ngIf="!isUserFollowing(user)">
-    <button class='button' type="submit" (click)="FollowUser(user)">Follow</button>
+    <button class='button' type="submit" (click)="followUser(user)">Follow</button>
   </ng-container>      </ul>
   </div>
     
-  </div>
+</div>
   

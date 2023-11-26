@@ -28,7 +28,7 @@ export class LoginComponent {
       // Check if the response indicates a successful login (e.g., the response contains user data)
       if (response) {
         // Handle the successful login (e.g., store user data, navigate to home)
-        this.userService.setConnectedUser(response); // Set the connected user's data
+        //this.userService.setConnectedUser(response); // Set the connected user's data
         localStorage.setItem('connectedUser', JSON.stringify(response)); // Store user data in local storage
         this.router.navigate(['/home']);
         console.log(this.userService.getConnectedUser())

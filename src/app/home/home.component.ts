@@ -23,11 +23,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.connectedUser = this.userService.getConnectedUser();
-    const userDataString = localStorage.getItem('connectedUser');
-    if (userDataString !== null) {
-      const userData = JSON.parse(userDataString);
-      this.userService.setConnectedUser(userData);
-    }
   }
   
   
