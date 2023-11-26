@@ -7,10 +7,11 @@ import { AddfriendsComponent } from '../addfriends/addfriends.component';
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss']
 })
-export class ProfilComponent implements OnInit {
-  constructor(private userService: UserService) {}
+export class ProfilComponent {
+ 
   connectedUser: any; // You can define a User type/interface
-  ngOnInit() {
+  constructor(private userService: UserService) {
     this.connectedUser = this.userService.getConnectedUser();
   }
+
 }

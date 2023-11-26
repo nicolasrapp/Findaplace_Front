@@ -57,7 +57,7 @@ import { PlaceComponent } from './place/place.component';
     StarComponent,
     RatingReview,
     TagComponent,
-    PlaceComponent
+    PlaceComponent,
   ],
   imports: [
     BrowserModule,
