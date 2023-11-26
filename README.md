@@ -25,3 +25,12 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
 
 - La page "mes adresses" récapitule tous les spots notés par l'utilisateur.
 
+# Comment faire marcher le projet ? 
+
+1. Clone le repo front: https://github.com/nicolasrapp/Findaplace_Front
+2. Clone le repo back: https://github.com/Leocomte01/FindaPlaceBack
+3. Creer dans IntelliJ la DB pour le back avec postgres et s'assurer du nom de la DB dans application.properties
+4. dans un terminal a la racine du back: docker compose up
+5. Run l'application SpringBoot
+6. dans un terminal a la racine du front: ng serve
+7: rdv localhost:4200
