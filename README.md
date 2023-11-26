@@ -1,27 +1,27 @@
-# Findaplace
+# Projet Java: Spot
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
+## Description
 
-## Development server
+Notre projet, baptisé "Spot", est une application web dédiée à la notation et à la rédaction d'avis sur des restaurants, bars et cafés. L'idée centrale est de créer une carte interactive qui se remplit au fur et à mesure que les utilisateurs découvrent de nouveaux endroits et partagent leurs avis.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Fonctionnalités
 
-## Code scaffolding
+### 1. Création de compte et gestion d'amis
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Les utilisateurs peuvent créer leur compte personnel.
+- Ajout d'amis en tant qu'"abonnés" sur la page profil.
 
-## Build
+### 2. Carte interactive
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Une carte interactive affiche tous les "spots" notés par les utilisateurs.
+- En cliquant sur un spot, les utilisateurs peuvent accéder à un résumé détaillé et être dirigés vers sa page récapitulative.
 
-## Running unit tests
+### 3. Ajout de nouveaux spots
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Possibilité d'ajouter un nouveau spot via un formulaire d'entrée d'adresses.
+- Le formulaire facilite la recherche du spot, permettant aux utilisateurs de le noter et de laisser un commentaire.
 
-## Running end-to-end tests
+### 4. Gestion des spots notés
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- La page "mes adresses" récapitule tous les spots notés par l'utilisateur.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
