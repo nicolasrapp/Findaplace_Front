@@ -1,7 +1,10 @@
 <app-navbar></app-navbar>
 <div id="id_container_adresses">
-    <h1>Liste des Restaurants</h1>
+    <h1>Mes Spots</h1>
     <div id="div_list_resto">
         <app-my-review id="container_review" *ngFor="let review of reviews" [review]="review" ></app-my-review>
+    </div>
+    <div id="if-empty" *ngIf="!reviews?.length">
+        <p>Tu n'as pas encore de Spots. N'attends plus pour les partager !</p>
     </div>
 </div>

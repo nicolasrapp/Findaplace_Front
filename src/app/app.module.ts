@@ -38,6 +38,7 @@ import { ReviewRatingPopupComponent } from './review-rating-popup/review-rating-
 import { NgxStarsModule } from 'ngx-stars';
 import { PlaceComponent } from './place/place.component';
 import { ShowreviewComponent } from './showreview/showreview.component';
+import { RecentActivityComponent } from './recent-activity/recent-activity.component';
 
 //AIzaSyCkJj6AMvwPFxKKEYm9zDb2zNfGChKh948
 
@@ -59,7 +60,8 @@ import { ShowreviewComponent } from './showreview/showreview.component';
     RatingReview,
     TagComponent,
     PlaceComponent,
-    ShowreviewComponent
+    ShowreviewComponent,
+    RecentActivityComponent
   ],
   imports: [
     BrowserModule,

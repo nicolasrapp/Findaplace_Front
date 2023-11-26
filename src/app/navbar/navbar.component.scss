@@ -9,6 +9,11 @@
     justify-items: center;
     padding: 25px 150px;
     min-width: 850px;
+    font-family: 'Inter';
+
+    h1 {
+      font-family: 'Inter';
+    }
 
     a{
       color: v.$theme-background-lighter;
@@ -26,11 +31,27 @@
       text-align: center;
       font-size: 15px;
       font-weight: 500;
+      font-family: 'Inter';
       &:hover {
         // background-color: white;
         color: white;
       }
     }
+    .log-button {
+      background-color: v.$theme-tertiary;
+      color: white;
+      border: 1px solid v.$theme-tertiary;
+      padding: 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+      font-family: 'Inter';
+      &:hover {
+        background-color: v.$theme-tertiary-darker;
+        color: white;
+        border-color: v.$theme-tertiary-darker;
+      }
+    }
+
     .navbar-left {
       display: flex; 
       align-items: center; 

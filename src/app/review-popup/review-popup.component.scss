@@ -1,8 +1,43 @@
+@use '../../variables' as v;
+
 :host {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
+  .place-input-container {
+    width: 700px;
+    padding: 20px;
+    background-color: v.$theme-tertiary-darker;
+    display: flex;
+    flex-direction: column;
+    h3 {
+      font-family: 'Inter';
+      font-weight: 500;
+      color: white;
+    }
+  }
+
+  .form-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+  }
+
   .place-input {
     width: 500px;
+  }
+
+  .input {
+    // width: 100%;
+    font-family: 'Inter';
+  }
+
+  .submit-button {
+    background-color: v.$theme-secondary;
+    color: white;
+    font-family: 'Inter';
   }

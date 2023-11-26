@@ -85,6 +85,10 @@ export class UserService {
     return this.http.get(`${APIURL}/user/followers/${id}`);
   }
 
+
+  setConnectedUser(connectedUserString: string) {
+    this.connectedUser = connectedUserString;
+  }
  
 
   clearConnectedUser() {

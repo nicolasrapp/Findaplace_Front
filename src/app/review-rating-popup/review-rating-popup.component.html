@@ -1,24 +1,33 @@
-<h2>{{ placeName }}</h2> 
-<div class="stars-rating">
-  <mat-icon class="star" *ngFor="let icon of maxRatingArr; let index=index" 
-  (mouseenter)="handleMouseEnter(index)"
-  (mouseleave)="handleMouseLeave()"
-  (click)="onRatingSet(index)"
-  [ngClass]="{checked:SelectedStar > index}">
-    star
-  </mat-icon>
+<div class="form-div">
+  <div class="first-row">
+    <div class="photo">
+      <img src="{{image}}">
+    </div>
+    <div class="title-rating">
+      <h2>{{ placeName }}</h2> 
+      <div class="address">
+        <p>{{ address }}</p>
+      </div>
+      <div class="stars-rating">
+        <mat-icon class="star" *ngFor="let icon of maxRatingArr; let index=index" 
+        (mouseenter)="handleMouseEnter(index)"
+        (mouseleave)="handleMouseLeave()"
+        (click)="onRatingSet(index)"
+        [ngClass]="{checked:SelectedStar > index}">
+          star
+        </mat-icon>
+      </div>
+      <form (ngSubmit)="submitRating()" #reviewForm="ngForm">
+        <div class="end-form">
+        <mat-form-field class="comment">
+          <textarea matInput #input placeholder="Commentaire" [(ngModel)]="comment" name="comment"></textarea>
+        </mat-form-field>
+      
+        <button mat-raised-button class="submit-button" color="primary" type="submit" [disabled]="reviewForm.invalid">Ajouter mon Spot</button>
+        </div>
+      </form>
+    </div>
+
 </div>
 
-<form (ngSubmit)="submitRating()" #reviewForm="ngForm">
-    <!-- <mat-form-field>
-      <mat-label>Rating</mat-label>
-      <ngx-stars (ratingOutput)="onRatingSet($event)"></ngx-stars>
-    </mat-form-field> -->
-  
-
-    <mat-form-field>
-      <textarea matInput #input placeholder="Comment" [(ngModel)]="comment" name="comment"></textarea>
-    </mat-form-field>
-  
-    <button mat-raised-button color="primary" type="submit" [disabled]="reviewForm.invalid">Submit Review</button>
-  </form>
+</div>

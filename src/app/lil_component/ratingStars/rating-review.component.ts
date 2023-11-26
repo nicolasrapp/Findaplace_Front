@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
       <app-star *ngFor="let star of stars" [isFilled]="star"></app-star>
     </div>
   `,
-  styles: [/* Vos styles CSS ici */]
+  styles: []
 })
 export class RatingReview {
   @Input() rating: number = 0;

@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class MyReviewComponent {
   @Input() review: any;
+  @Input() user: any;
   @Input() adress: string ="";
 
   ngOnInit() {

@@ -52,7 +52,7 @@ export class ReviewPopupComponent implements OnInit {
   @ViewChild('ngxPlaces')
   placesRef!: NgxGpAutocompleteDirective;
 
-  @Input() placeholder = '';
+  @Input() placeholder = 'Entrer une adresse';
 
   @Output() placeChanged = new EventEmitter<PlaceSearchResult>();
 
@@ -88,7 +88,7 @@ export class ReviewPopupComponent implements OnInit {
   );
 
   options = {
-    types: ["restaurant"],
+    types: ["restaurant", "cafe", "bar"],
     bounds: this.bounds,
     componentRestrictions: { country: 'FR' },
   };
@@ -183,11 +183,13 @@ export class ReviewPopupComponent implements OnInit {
             }
           )
         } else {
-          console.log("place doesn't exist");
-          console.log("selected place", this.selectedPlace)
-          this.placeDataService.setPlaceData(this.selectedPlace);
-          this.dialogRef.close();
-          this.dialog.open(ReviewRatingPopupComponent);
+          if (this.selectedPlace != null) {
+            console.log("place doesn't exist");
+            console.log("selected place", this.selectedPlace)
+            this.placeDataService.setPlaceData(this.selectedPlace);
+            this.dialogRef.close();
+            this.dialog.open(ReviewRatingPopupComponent);
+          }
         }
       },
       (error: any) => {

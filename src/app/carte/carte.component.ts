@@ -86,7 +86,6 @@ export class CarteComponent implements OnInit, AfterViewInit {
         ? "Error: The Geolocation service failed."
         : "Error: Your browser doesn't support geolocation."
     );
-    console.log("Location: ", pos);
     infoWindow.open(this.googleMap);
   }
 
@@ -97,7 +96,6 @@ export class CarteComponent implements OnInit, AfterViewInit {
     this.placeservice.getAllPlaces().subscribe((data: any) =>{
 
       this.Allplaces = data;
-      console.log(this.Allplaces)
       this.Allplaces.forEach(place => {
         // Extract latitude and longitude from the location string
         const [latitudeStr, longitudeStr] = place.location
@@ -124,7 +122,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
 }
 
   image = {
-    url: "assets/pins/red.png",
+    url: "assets/pins/blue.png",
     // This marker is 20 pixels wide by 32 pixels high.
     scaledSize: new google.maps.Size(36, 52),
     // The origin for this image is (0, 0).
@@ -153,12 +151,10 @@ export class CarteComponent implements OnInit, AfterViewInit {
       const voirPlusButton = document.getElementById('voirplusbutton');
       if (voirPlusButton) {
         voirPlusButton.addEventListener('click', () => {
-          console.log('Redirecting to place');
           this.router.navigate([`/place`, place.id]);
         });
       }
     });
-    console.log(newMarker);
     this.markers.push(newMarker);
   }
 

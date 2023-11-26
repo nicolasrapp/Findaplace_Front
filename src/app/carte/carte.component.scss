@@ -31,9 +31,8 @@
 }
 
 .location-button {
-    background-color: v.$theme-secondary;
+    background-color: v.$theme-tertiary;
+    color: white;
     align-self: flex-end;
     margin-top: 15px;
-    // height: 40px;
-    // width: 40px;
 }

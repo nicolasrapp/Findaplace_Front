@@ -20,6 +20,10 @@ export class ReviewService {
     return this.http.get(`${APIURL}/review`);
   }
 
+  getActivities(id: any) {
+    return this.http.get(`${APIURL}/review/activities/${id}`)
+  }
+
   getReviewById(id: any) {
     return this.http.get(`${APIURL}/review/${id}`);
   }

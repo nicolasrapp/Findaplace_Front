@@ -47,6 +47,8 @@ export class ReviewRatingPopupComponent {
   reviewData: any;
   placeData: any;
   connectedUser: any;
+  image: any;
+  address: any;
   placeName: string = '';
   rating: number = 0; // Assuming rating is a number
   comment: string = '';
@@ -70,6 +72,8 @@ ngOnInit(): void {
   });
   if (this.reviewData != null) {
     this.placeName = this.reviewData.place.name;
+    this.image = this.reviewData.place.images;
+    this.address = this.reviewData.place.address;
     this.rating = this.reviewData.rate
     this.SelectedStar = this.rating;
     this.comment = this.reviewData.comment;
@@ -80,6 +84,8 @@ ngOnInit(): void {
       // Handle the data here
       this.placeData = data;
       this.placeName = data.name;
+      this.address = data.address;
+      this.image = data.images;
       this.starsComponent?.setRating(this.rating);
       console.log('Received review data in ReviewFormComponent:', this.reviewData);
     });

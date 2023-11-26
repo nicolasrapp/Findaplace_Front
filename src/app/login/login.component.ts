@@ -30,6 +30,7 @@ export class LoginComponent {
         // Handle the successful login (e.g., store user data, navigate to home)
         //this.userService.setConnectedUser(response); // Set the connected user's data
         localStorage.setItem('connectedUser', JSON.stringify(response)); // Store user data in local storage
+        this.userService.setConnectedUser(JSON.stringify(response));
         this.router.navigate(['/home']);
         console.log(this.userService.getConnectedUser())
       } else {

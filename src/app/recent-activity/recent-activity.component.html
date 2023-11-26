@@ -1,0 +1,6 @@
+<div *ngIf="reviews" id="id_container_adresses">
+    <h1>Activité Récente</h1>
+    <div id="div_list_resto">
+        <app-my-review id="container_review" *ngFor="let review of reviews" [review]="review" [user]="review.users.user_name"></app-my-review>
+    </div>
+</div>

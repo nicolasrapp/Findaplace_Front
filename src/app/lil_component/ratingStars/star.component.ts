@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
     </svg>
   `,
   styles: [
-    `.etoile_style{ padding-top: 6px}`
+    `.etoile_style{ padding-top: 6px; margin-right: -7px}`
   ]
 })
 export class StarComponent {

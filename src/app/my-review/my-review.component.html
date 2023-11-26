@@ -1,33 +1,39 @@
+<div class="user" *ngIf="user">
+    <p>{{user}}</p>
+</div>
 <div class="popup">
     <div class="photo_text">
-    <div class="text">
-    <div class="place-name">
-        <h1>{{review.place.name}}</h1>
+      <div class="text">
+        <div class="place-name">
+          <h1>{{ review.place.name }}</h1>
+        </div>
+        <div class="address">
+          <p>{{ adress }}</p>
+        </div>
+      </div>
+      <div class="photo">
+        <img src="{{ review.place.images }}" />
+      </div>
     </div>
-    <div class="address">
-        <p>{{adress}}</p>
-    </div>
-    
-    <div class="rating-line">
+      <div class="rating-line" *ngIf="review.rate > 0">
         <div class="rating">
-            <div class="left">
-            <p>{{review.rate}}</p>
+          <div class="left">
+            <p>{{ review.rate }}</p>
             <div class="stars">
-                <app-rating-review [rating]="review.rate"></app-rating-review>                
-            </div> 
-        </div> 
+              <app-rating-review [rating]="review.rate"></app-rating-review>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="comments">
-        <p><b>Commentaire :</b> </p>
-        <p>{{review.comment}}</p>
-    </div>
-    </div>
-        <div class="photo">
-            <img src={{review.place.images}}>
-        </div>
-    </div>
-    <div class="tag_wrapper">
-        <app-tag *ngFor="let tag of review.tags" [tagName]="tag.name" [tagColor] = "tag.color"></app-tag>
-    </div>
+      </div>
+      <div class="tag_wrapper">
+        <app-tag
+          *ngFor="let tag of review.tags"
+          [tagName]="tag.name"
+          [tagColor]="tag.color"
+        ></app-tag>
+      </div>
+      <div class="comments" *ngIf="review.comment">
+        <p><b>Commentaire :</b></p>
+        <p>{{ review.comment }}</p>
+      </div>
 </div>

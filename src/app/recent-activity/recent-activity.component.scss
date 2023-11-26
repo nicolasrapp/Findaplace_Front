@@ -19,16 +19,9 @@
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-between;
+
     #container_review{
         flex: 0 1 calc(25% - 20px);
 
-    }
-}
-
-#if-empty {
-    p {
-        font-family: 'Inter';
-        color: white;
-        font-weight: 400;
     }
 }

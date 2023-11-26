@@ -11,9 +11,10 @@
       <a class="navLink" routerLink="/my_adresses">
         <li ngbNavItem>Mes Spots</li>
       </a>
-      <a class="navLink" routerLink="/rechercher">
+      <!-- <a class="navLink" routerLink="/rechercher">
         <li ngbNavItem><i class="fas fa-search"></i></li>
-      </a>
+      </a> -->
+      <button mat-flat-button class="log-button" (click)="openDialog()">Ajouter un Spot</button>
     </div>
     <div class="navbar-right">
       
@@ -34,7 +35,7 @@
 
            
             
-            <a class="navLink" routerLink="/login">
+            <a class="navLink" routerLink="/login" (click)="handleLogout()">
               <li ngbNavItem>Déconnexion</li>
             </a>
           </div>

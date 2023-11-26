@@ -1,4 +1,6 @@
+<div class="place-input-container">
 <h3>Nom de ton Spot</h3>
+<div class="form-line">
 <form>
   <mat-form-field class="place-input">
     <input
@@ -7,12 +9,13 @@
       #placesRef="ngx-places"
       type="text"
       matInput
+      class="input"
       (onAddressChange)="onPlaceSelected($event)"
       [placeholder]="placeholder"
       [options]="options"
     />
   </mat-form-field>
 </form>
-<button mat-flat-button color="primary" (click)="nextStep()">Suite</button>
-
-
+<button mat-flat-button class="submit-button" (click)="nextStep()">Suite</button>
+</div>
+</div>
