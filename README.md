@@ -31,6 +31,7 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
 1. Clone le repo front: https://github.com/nicolasrapp/Findaplace_Front
 2. Clone le repo back: https://github.com/Leocomte01/FindaPlaceBack
 3. Creer dans IntelliJ la DB pour le back avec postgres et s'assurer du nom de la DB dans application.properties
-4. dans un terminal a la racine du back: docker compose up
-5. Run l'application SpringBoot
-6. dans un terminal a la racine du front: ng serve
+4. Run les scripts SQL du fichier InitBDD pour initialiser les tables et les données. Executer en premier le fishier de création des tables.
+5. dans un terminal a la racine du back: docker compose up
+6. Run l'application SpringBoot
+7. dans un terminal a la racine du front: ng serve
