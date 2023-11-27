@@ -1,6 +1,8 @@
 // star.component.ts
 import { Component, Input } from '@angular/core';
 
+/* composant qui gere l'affichage des tags. Feature que nous n'avons pas eu le temps d'implementer. */
+
 @Component({
   selector: 'app-tag',
   template: `

@@ -1,3 +1,4 @@
+// Importation des modules Angular nécessaires
 import {
   Component,
   ViewChild,
@@ -22,6 +23,9 @@ import { PlaceService } from 'src/services/place.service';
 import { ReviewdataService } from '../reviewdata.service';
 import { PlacedataService } from '../placedata.service';
 
+/* composant qui permet de creer le formulaire de creation d'un nouvel avis. */
+
+// Interface pour les résultats de recherche de lieu
 export interface PlaceSearchResult {
   id?: null,
   id_place_google?: string,
@@ -64,6 +68,7 @@ export class ReviewPopupComponent implements OnInit {
 
   connectedUser: any;
 
+  // Constructeur du composant, injecte le service de la carte, le service de données de critique, etc.
   constructor(public dialogRef: MatDialogRef<ReviewPopupComponent>,
     public dialog: MatDialog,
      private ngZone: NgZone, 
@@ -73,54 +78,47 @@ export class ReviewPopupComponent implements OnInit {
      private reviewService: ReviewService,
      private placeService: PlaceService,
      private userService: UserService) {
-    // const api = this.mapService.getGoogleMapsApi();
-    // Access the bounds from the CarteComponent
-    // const bounds = this.carteComponent.getBounds();
-    // if (bounds) {
-    //   console.log('Bounds from CarteComponent:', bounds.toJSON());
-    //   // Now you can use these bounds for your other map or component
-    // }
   }
 
+  // Limites de la carte par défaut
   bounds: google.maps.LatLngBounds = new google.maps.LatLngBounds(
-    { lat: 48.815573, lng: 2.224199 }, // Southwest corner
-    { lat: 48.902145, lng: 2.469920 } // Northeast corner
+    { lat: 48.815573, lng: 2.224199 }, // Coin sud-ouest
+    { lat: 48.902145, lng: 2.469920 } // Coin nord-est
   );
 
+  // Options de recherche de lieu
   options = {
     types: ["restaurant", "cafe", "bar"],
     bounds: this.bounds,
     componentRestrictions: { country: 'FR' },
   };
 
-
+  // Méthode appelée lors de l'initialisation du composant
   ngOnInit() {
+    // Récupère l'utilisateur connecté depuis le service utilisateur
     this.connectedUser = this.userService.getConnectedUser();
+
+    // Récupère les limites de la carte depuis le service de la carte
     const mapBounds = this.mapService.mapBounds;
+
+    // Si des limites sont disponibles, les utilise
     if (mapBounds) {
-      // Use the map bounds as needed
       this.bounds = mapBounds;
       this.options = {
         types: ["restaurant"],
         bounds: mapBounds,
         componentRestrictions: { country: 'FR' },
       };
-      console.log(this.options.bounds)
-      console.log('Map Bounds:', mapBounds.toJSON());
-    } else {
-      this.bounds = new google.maps.LatLngBounds(
-        { lat: 48.815573, lng: 2.224199 }, // Southwest corner
-        { lat: 48.902145, lng: 2.469920 } // Northeast corner
-      );
     }
-
   }
 
+  // Méthode appelée après l'initialisation de la vue
   async ngAfterViewInit() {
   }
 
+  // Méthode appelée lorsqu'un lieu est sélectionné dans la barre de recherche
   onPlaceSelected(place: google.maps.places.PlaceResult) {
-    // await this.getBoundsFromLocation();
+    // Crée un objet formatté avec les informations du lieu sélectionné
     const formattedPlace: PlaceSearchResult = {
       id: null,
       id_place_google: place.place_id,
@@ -130,10 +128,11 @@ export class ReviewPopupComponent implements OnInit {
       images: this.getPhotoUrl(place),
       icon: place.icon,
     }
+    // Émet un événement avec le lieu sélectionné
     this.selectedPlace = formattedPlace;
-    console.log(this.selectedPlace);
   }
 
+  // Méthode pour obtenir l'URL de la première photo d'un lieu (s'il y en a une)
   getPhotoUrl(
     place: google.maps.places.PlaceResult | undefined
   ): string | undefined {
@@ -142,27 +141,27 @@ export class ReviewPopupComponent implements OnInit {
       : undefined;
   }
 
+  // Méthode appelée pour passer à l'étape suivante
   nextStep(): void {
-    console.log(this.connectedUser);
-
+    // Vérifie si le lieu sélectionné existe déjà
     this.placeService.getPlaceByGoogleId(this.selectedPlace?.id_place_google)
     .subscribe(
       (data: any) => {
-        // Handle the data here
+        // Traite les données ici
         this.placeData = data;
-        console.log(this.placeData);
 
+        // Si le lieu existe
         if (this.placeData != null) {
-          console.log("place already exists");
+          // Vérifie si une critique existe déjà pour ce lieu et cet utilisateur
           this.reviewService.getReviewForPlaceAndUser(this.placeData.id, this.connectedUser.id).subscribe(
             (data: any) => {
               if (data != null) {
-                console.log("review already exists");
+                // Si une critique existe, la récupère, la sauvegarde et ouvre le popup de notation
                 this.reviewDataService.setReviewData(data);
                 this.dialogRef.close();
                 this.dialog.open(ReviewRatingPopupComponent);
               } else {
-                console.log("review doesn't exist");
+                // Si aucune critique n'existe, crée une nouvelle critique, la sauvegarde et ouvre le popup de notation
                 const reviewData = {
                   id: '',
                   rate: 0,
@@ -172,20 +171,18 @@ export class ReviewPopupComponent implements OnInit {
                   place: this.placeData
                 };
   
-                console.log(reviewData);
                 this.reviewDataService.setReviewData(reviewData);
                 this.dialogRef.close();
                 this.dialog.open(ReviewRatingPopupComponent);
               }
             },
             (error: any) => {
-              console.error('Error getting review for place and user:', error);
+              console.error('Erreur lors de la récupération de la critique pour le lieu et l\'utilisateur :', error);
             }
           )
         } else {
+          // Si le lieu n'existe pas, sauvegarde le lieu sélectionné et ouvre le popup de notation
           if (this.selectedPlace != null) {
-            console.log("place doesn't exist");
-            console.log("selected place", this.selectedPlace)
             this.placeDataService.setPlaceData(this.selectedPlace);
             this.dialogRef.close();
             this.dialog.open(ReviewRatingPopupComponent);
@@ -193,9 +190,8 @@ export class ReviewPopupComponent implements OnInit {
         }
       },
       (error: any) => {
-        console.error('Error fetching place data:', error);
+        console.error('Erreur lors de la récupération des données du lieu :', error);
       }
     );
   }
-
 }

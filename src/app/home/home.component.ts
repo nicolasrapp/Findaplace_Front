@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { PlaceSearchResult, ReviewPopupComponent } from '../review-popup/review-popup.component';
 import { Router } from '@angular/router';
 
+/* page home qui récupere l'utilisateur connecté et implémente le composant carte ainsi que l'activité récente des amis. */
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

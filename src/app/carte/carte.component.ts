@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Renderer2 } from '@angular/core';
 
-
+/* ce composant crée la carte en utilisant l'API google maps et recupere tout les spots pour en creer a son initialisation des markers
+qui sont posés sur la carte. Le composant gere egalement la création des popup quand on clique sur un des markers sur la carte. */
 
 @Component({
   selector: 'app-carte',
@@ -30,15 +31,17 @@ export class CarteComponent implements OnInit, AfterViewInit {
   markers: google.maps.Marker[] = [];
   googleMap: google.maps.Map | undefined;
 
-
+  // Méthode appelée lors du déplacement de la carte
   moveMap(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.center = event.latLng.toJSON();
   }
 
+  // Méthode appelée lors du déplacement de la carte avec une action spécifique
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
 
+  // Options de la carte Google
   mapOptions: google.maps.MapOptions = {
     mapTypeId: 'roadmap',
     styles: mapstyle
@@ -47,6 +50,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private loader: Loader, private placeservice: PlaceService, private sanitizer: DomSanitizer,
     private renderer2: Renderer2,  private elementRef: ElementRef) {}
 
+  // Récupère les limites de la carte
   getBounds(): google.maps.LatLngBounds | undefined {
     if (this.googleMap) {
       return this.googleMap.getBounds() || undefined;
@@ -54,6 +58,7 @@ export class CarteComponent implements OnInit, AfterViewInit {
     return undefined;
   }
 
+  // Centre la carte sur la position actuelle de l'utilisateur
   moveToLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -70,11 +75,12 @@ export class CarteComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
-      // Browser doesn't support Geolocation
+      // Le navigateur ne prend pas en charge la géolocalisation
       this.handleLocationError(false, this.infoWindow, this.center);
     }
   }
 
+  // Gère les erreurs liées à la géolocalisation
   handleLocationError(
     browserHasGeolocation: boolean,
     infoWindow: google.maps.InfoWindow,
@@ -83,54 +89,52 @@ export class CarteComponent implements OnInit, AfterViewInit {
     infoWindow.setPosition(pos);
     infoWindow.setContent(
       browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation."
+        ? "Erreur : le service de géolocalisation a échoué."
+        : "Erreur : votre navigateur ne prend pas en charge la géolocalisation."
     );
     infoWindow.open(this.googleMap);
   }
 
   infoWindow: google.maps.InfoWindow = new google.maps.InfoWindow();
+  
   ngOnInit() {
-
-
-    this.placeservice.getAllPlaces().subscribe((data: any) =>{
-
+    // Récupère toutes les places depuis le service
+    this.placeservice.getAllPlaces().subscribe((data: any) => {
       this.Allplaces = data;
       this.Allplaces.forEach(place => {
-        // Extract latitude and longitude from the location string
+        // Extrait la latitude et la longitude de la chaîne de localisation
         const [latitudeStr, longitudeStr] = place.location
           .replace('(', '')
           .replace(')', '')
           .split(', ');
 
-        // Parse the strings into numbers
+        // Convertit les chaînes en nombres
         const latitude = parseFloat(latitudeStr);
         const longitude = parseFloat(longitudeStr);
 
-        this.addMarker(latitude, longitude, place.name, place)
-
-  })
-})
-}
+        // Ajoute un marqueur pour chaque place
+        this.addMarker(latitude, longitude, place.name, place);
+      });
+    });
+  }
 
   ngAfterViewInit(): void {
-    // Now, the Google Map should be initialized.
+    // Une fois que la carte Google est initialisée, la référence est mise à jour
     const map = this.googleMapElement.googleMap;
     if (map) {
       this.googleMap = map;
+    }
   }
-}
 
+  // Définition des options pour l'image du marqueur
   image = {
     url: "assets/pins/blue.png",
-    // This marker is 20 pixels wide by 32 pixels high.
     scaledSize: new google.maps.Size(36, 52),
-    // The origin for this image is (0, 0).
     origin: new google.maps.Point(0, 0),
-    // The anchor for this image is the base of the flagpole at (0, 32).
     anchor: new google.maps.Point(0, 32),
   };
 
+  // Ajoute un marqueur à la carte
   addMarker(lati: any, long: any, title: any, place: any) {
     const newMarker = new google.maps.Marker({
       position: { lat: lati, lng: long },
@@ -141,12 +145,14 @@ export class CarteComponent implements OnInit, AfterViewInit {
     
     const infoWindow = new google.maps.InfoWindow({
       content: this.CreatePopupContent(place),
-
     });
 
-  newMarker.addListener('click', () => {
-    infoWindow.open(this.googleMap, newMarker);
-  });
+    // Gère l'événement de clic sur le marqueur
+    newMarker.addListener('click', () => {
+      infoWindow.open(this.googleMap, newMarker);
+    });
+
+    // Gère l'événement 'domready' (quand le contenu de l'info-bulle est prêt)
     google.maps.event.addListener(infoWindow, 'domready', () => {
       const voirPlusButton = document.getElementById('voirplusbutton');
       if (voirPlusButton) {
@@ -155,10 +161,12 @@ export class CarteComponent implements OnInit, AfterViewInit {
         });
       }
     });
+
+    // Ajoute le marqueur à la liste
     this.markers.push(newMarker);
   }
 
-
+// crée le popup présent dans l'infobulle a partir d'un str qui contient tout le html css nécessaire
 CreatePopupContent(place: any){
   const contentpopup = `
   <style>

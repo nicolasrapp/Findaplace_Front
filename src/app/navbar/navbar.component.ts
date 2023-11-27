@@ -1,38 +1,54 @@
+// Importation des modules Angular nécessaires
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ReviewPopupComponent } from '../review-popup/review-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 
+/* composant qui crée la barre de navigation de l'application. */
+
+// Définition du composant avec le sélecteur 'app-navbar'
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
+// Définition de la classe du composant
 export class NavbarComponent implements OnInit {
-  connectedUser: any; // You can define a User type/interface
+  // Propriété pour stocker les informations de l'utilisateur connecté
+  connectedUser: any; // Vous pouvez définir un type/interface User
 
-  constructor(private userService: UserService,  public dialog: MatDialog) {}
+  // Constructeur du composant, injecte les services nécessaires
+  constructor(private userService: UserService, public dialog: MatDialog) {}
 
-
-  onSubmit() {
-    localStorage.removeItem('connectedUser'); // Remove user data from local storage
-  this.userService.clearConnectedUser(); // Clear user data from the service
-  // Additional logout logic
-  }
-
+  // Méthode appelée lors de l'initialisation du composant
   ngOnInit() {
-    const connectedUserString : string | null = localStorage.getItem('connectedUser');
+    // Récupère les informations de l'utilisateur connecté à partir du stockage local
+    const connectedUserString: string | null = localStorage.getItem('connectedUser');
     this.connectedUser = connectedUserString ? JSON.parse(connectedUserString) : null;
   }
 
-  openDialog(): void { 
-    let dialogRef = this.dialog.open(ReviewPopupComponent, { 
-      data: {}
-    }); 
+  // Méthode pour gérer la soumission du formulaire (par exemple, déconnexion de l'utilisateur)
+  onSubmit() {
+    // Supprime les données de l'utilisateur du stockage local
+    localStorage.removeItem('connectedUser');
+    // Efface les données de l'utilisateur du service
+    this.userService.clearConnectedUser();
+    // Logique supplémentaire de déconnexion
   }
 
+  // Méthode pour ouvrir la boîte de dialogue de création de revue
+  openDialog(): void {
+    // Utilise le service MatDialog pour ouvrir la boîte de dialogue
+    let dialogRef = this.dialog.open(ReviewPopupComponent, {
+      data: {} // Les données à passer à la boîte de dialogue (peut être étendu selon les besoins)
+    });
+  }
+
+  // Méthode pour gérer la déconnexion de l'utilisateur
   handleLogout() {
-    localStorage.removeItem('connectedUser'); // Remove user data from local storage
-    this.userService.clearConnectedUser(); // Clear user data from the service
+    // Supprime les données de l'utilisateur du stockage local
+    localStorage.removeItem('connectedUser');
+    // Efface les données de l'utilisateur du service
+    this.userService.clearConnectedUser();
   }
 }

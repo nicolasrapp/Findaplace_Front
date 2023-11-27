@@ -1,24 +1,21 @@
+// map.service.ts
 import { Injectable } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // Service disponible au niveau racine de l'application
 })
 export class MapService {
+  private googleMapsApi: any; // Référence à l'API Google Maps
+  mapBounds: google.maps.LatLngBounds | undefined; // Limites de la carte, initialisées à undefined
 
-  private googleMapsApi: any;
-
-  // initializeApi(apiKey: string) {
-  //   this.loader = new Loader({ apiKey, libraries: ['places'] })
-  //   return this.googleMapsApi = google.maps;
-  // }
-
-  setGoogleMapsApi(loader: Loader) {
+  // Méthode pour définir l'API Google Maps à l'aide du chargeur (Loader)
+  setGoogleMapsApi(loader: Loader): void {
     this.googleMapsApi = loader;
   }
 
+  // Méthode pour obtenir l'API Google Maps
   getGoogleMapsApi(): any {
     return this.googleMapsApi;
   }
-  mapBounds: google.maps.LatLngBounds | undefined;
 }

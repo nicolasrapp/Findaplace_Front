@@ -4,64 +4,68 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { NgZone } from '@angular/core';
 
+/* composant qui permet de creer la partie d'ajouts d'amis sur la page profil */
 
 @Component({
   selector: 'app-addfriends',
   templateUrl: './addfriends.component.html',
   styleUrls: ['./addfriends.component.scss']
 })
-export class AddfriendsComponent implements OnInit {
+export class AddfriendsComponent implements OnInit, OnChanges {
   searchQuery: any;
   users: any[] = [];
-  connectedUser: any; // You can define a User type/interface
-  followersList: any[] = []; // Assuming this is the type of your followers objects
+  connectedUser: any; 
+  followersList: any[] = []; 
 
-
-
-  constructor(private userService: UserService, private router: Router,private cdr: ChangeDetectorRef,private zone: NgZone) {}
+  constructor(private userService: UserService, private router: Router, private cdr: ChangeDetectorRef, private zone: NgZone) {}
 
   ngOnInit() {
+    // Au chargement du composant, récupère tous les utilisateurs et les abonnés du utilisateur connecté
     this.userService.getAllUsers().subscribe((data: any) => {
       this.users = data;
       this.connectedUser = this.userService.getConnectedUser();
-  
-      // Ensure that this.connectedUser is defined before using it
+
+      // Assurez-vous que this.connectedUser est défini avant de l'utiliser
       if (this.connectedUser) {
+        // Filtre la liste des utilisateurs pour exclure le utilisateur connecté
         this.users = this.users.filter(user => user.id !== this.connectedUser.id);
-  
-        // Subscribe to the observable to get the followers data
+
+        // Souscrit à l'observable pour obtenir les données des abonnés
         this.userService.getFollowers(this.connectedUser.id).subscribe((followers: any) => {
           console.log(followers);
-  
-          // Now you can use the followers data as a list of objects
-          // For example, you can assign it to a class variable
+
+          // Vous pouvez maintenant utiliser les données des abonnés comme une liste d'objets
+          // Par exemple, vous pouvez l'assigner à une variable de classe
           this.followersList = followers;
         });
       }
     });
   }
-  
+
+  // Vérifie si un utilisateur est suivi par le utilisateur connecté
   isUserFollowing(user: any): boolean {
     return this.followersList && this.followersList.some(follower => follower.id === user.id);
   }
 
+  // Suit un utilisateur
   followUser(user: any){
-    const userId = user.id
-    this.userService.addFriend(userId)
-    console.log("follow")
+    const userId = user.id;
+    this.userService.addFriend(userId);
+    console.log("Suivre");
     this.zone.run(() => this.cdr.detectChanges());
   }
 
+  // Ne suit plus un utilisateur
   unFollowUser(user: any){
-    const userId = user.id
-    this.userService.deleteFriend(userId)
+    const userId = user.id;
+    this.userService.deleteFriend(userId);
     //this.zone.run(() => this.cdr.detectChanges());
 
   }
 
+  // Méthode appelée lorsqu'il y a des changements dans les propriétés d'entrée du composant
   ngOnChanges(changes: SimpleChanges): void {
     // Code à exécuter lorsqu'il y a des changements dans les propriétés d'entrée
-    console.log("chagement")
-    
+    console.log("Changement");
   }
 }

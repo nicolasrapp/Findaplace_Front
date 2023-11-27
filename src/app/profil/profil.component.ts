@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { AddfriendsComponent } from '../addfriends/addfriends.component';
 
+/* composant qui affiche le profil de l'utilisateur. il implemente egalement le composant add friends pour la gestion des amis. */
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.component.html',

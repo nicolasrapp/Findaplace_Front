@@ -1,6 +1,8 @@
 // star.component.ts
 import { Component, Input } from '@angular/core';
 
+/* composant permettant d'afficher les etoiles. */
+
 @Component({
   selector: 'app-star',
   template: `
