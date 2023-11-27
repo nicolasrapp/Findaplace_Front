@@ -53,6 +53,8 @@ export class ReviewRatingPopupComponent {
   reviewData: any;
   placeData: any;
   connectedUser: any;
+  address: any;
+  image: any;
   placeName: string = '';
   rating: number = 0; // On suppose que la note est un nombre
   comment: string = '';
@@ -89,6 +91,8 @@ export class ReviewRatingPopupComponent {
     // Si des données de critique sont disponibles, les utilise
     if (this.reviewData != null) {
       this.placeName = this.reviewData.place.name;
+      this.address = this.reviewData.place.address
+      this.image = this.reviewData.place.images
       this.rating = this.reviewData.rate
       this.SelectedStar = this.rating;
       this.comment = this.reviewData.comment;
@@ -98,6 +102,8 @@ export class ReviewRatingPopupComponent {
       this.placeDataService.placeData$.subscribe((data: any) => {
         this.placeData = data;
         this.placeName = data.name;
+        this.address = data.address;
+        this.image = data.images;
         this.starsComponent?.setRating(this.rating);
       });
     }
