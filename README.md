@@ -15,23 +15,28 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
 
 - Une carte interactive affiche tous les "spots" notés par les utilisateurs.
 - En cliquant sur un spot, les utilisateurs peuvent accéder à un résumé détaillé et être dirigés vers sa page récapitulative.
-- A coté de la carte, vous retrouverez également les dernieres activités de vos amis, leurs dernieres découvertes.
+- On peut autoriser la localisation et se retrouver sur la carte.
 
 ### 3. Ajout de nouveaux spots
 
 - Possibilité d'ajouter un nouveau spot via un formulaire d'entrée d'adresses.
 - Le formulaire facilite la recherche du spot, permettant aux utilisateurs de le noter et de laisser un commentaire.
+- Celui-ci est centralisé par rapport à la localisation de l'utilisateur (si il l'autorise) et permet de recommander des adresses proches de l'où on se trouve.
 
 ### 4. Gestion des spots notés
 
 - La page "mes adresses" récapitule tous les spots notés par l'utilisateur.
+- Sous la carte, vous retrouverez également les dernières activités de vos amis, leurs dernières découvertes
 
-# Comment faire marcher le projet ? 
+# Comment lancer le projet ? 
 
 1. Clone le repo front: https://github.com/nicolasrapp/Findaplace_Front
 2. Clone le repo back: https://github.com/Leocomte01/FindaPlaceBack
-3. Creer dans IntelliJ la DB pour le back avec postgres et s'assurer du nom de la DB dans application.properties
-4. Run les scripts SQL du fichier InitBDD pour initialiser les tables et les données. Executer en premier le fishier de création des tables.
-5. dans un terminal a la racine du back: docker compose up
-6. Run l'application SpringBoot
-7. dans un terminal a la racine du front: ng serve
+3. Créer dans IntelliJ la DB pour le back avec postgres et s'assurer du nom de la DB dans application.properties
+4. Run les scripts SQL du fichier InitBDD pour initialiser les tables, les données et la création d'IDs dans l'ordre.
+6. Dans un terminal à la racine du back, run
+   ``` docker compose up ```
+9. Run l'application SpringBoot
+10. Dans un terminal à la racine du front, run
+    ``` ng serve ```
+11. Dans un navigateur, entrer l'adresse http://localhost:4200/
