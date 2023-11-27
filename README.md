@@ -38,7 +38,7 @@ Notre projet, baptisé "Spot", est une application web dédiée à la notation e
    ``` docker compose up ```
 9. Run l'application SpringBoot
 10. Dans un terminal à la racine du front, run
-11. ``` npm install ```
-12. Dans un terminal à la racine du front, run
+   ``` npm install ```
+11. Dans un terminal à la racine du front, run
     ``` ng serve ```
-13. Dans un navigateur, entrer l'adresse http://localhost:4200/
+12. Dans un navigateur, entrer l'adresse http://localhost:4200/
